@@ -1,0 +1,176 @@
+<div class="app-shell">
+  <!-- Toast Notifications -->
+  <app-toast />
+
+  <!-- Navbar -->
+  <header class="app-header" [class.scrolled]="isScrolled()">
+    <div class="nav-container">
+      <!-- Brand -->
+      <a
+        [routerLink]="authService.isAuthenticated() ? '/dashboard' : '/'"
+        class="brand"
+        (click)="closeMobileMenu()"
+      >
+        <div class="brand-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Service</span>
+          <span class="brand-suffix">on Wheels</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="desktop-nav" role="navigation" aria-label="Main navigation">
+        @if (authService.isAuthenticated()) {
+          <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+            </svg>
+            Dashboard
+          </a>
+          <a routerLink="/request-service" routerLinkActive="active" class="nav-link">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+            Request
+          </a>
+          <a routerLink="/my-requests" routerLinkActive="active" class="nav-link">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            My Requests
+          </a>
+          <a routerLink="/profile" routerLinkActive="active" class="nav-link">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            Profile
+          </a>
+        } @else {
+          <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+        }
+      </nav>
+
+      <!-- Right Controls -->
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button
+          class="theme-toggle btn-icon"
+          (click)="themeService.toggle()"
+          [title]="themeService.theme() === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+          aria-label="Toggle theme"
+        >
+          @if (themeService.theme() === 'dark') {
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          } @else {
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          }
+        </button>
+
+        @if (authService.isAuthenticated()) {
+          <!-- Logout Button -->
+          <button class="btn btn-ghost btn-sm logout-btn" (click)="logout()">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            Sign Out
+          </button>
+        } @else {
+          <a routerLink="/register" class="btn btn-primary btn-sm">
+            Get Started
+          </a>
+        }
+
+        <!-- Mobile Hamburger -->
+        <button class="mobile-toggle" (click)="toggleMobileMenu()" aria-label="Toggle navigation" [attr.aria-expanded]="isMobileMenuOpen()">
+          @if (!isMobileMenuOpen()) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen()" role="dialog" aria-label="Mobile navigation">
+    <div class="mobile-menu-inner">
+      @if (authService.isAuthenticated()) {
+        <a routerLink="/dashboard" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+          </svg>
+          Dashboard
+        </a>
+        <a routerLink="/request-service" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+          Request Service
+        </a>
+        <a routerLink="/my-requests" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          My Requests
+        </a>
+        <a routerLink="/profile" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          Profile
+        </a>
+        <div class="mobile-divider"></div>
+        <button (click)="logout()" class="mobile-link mobile-link-danger">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+          </svg>
+          Sign Out
+        </button>
+      } @else {
+        <a routerLink="/login" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">Login</a>
+        <a routerLink="/register" class="mobile-link mobile-link-cta" (click)="closeMobileMenu()">
+          Get Started
+        </a>
+      }
+
+      <!-- Theme toggle in mobile -->
+      <div class="mobile-divider"></div>
+      <button class="mobile-link mobile-theme-toggle" (click)="themeService.toggle()">
+        @if (themeService.theme() === 'dark') {
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+          Switch to Light Mode
+        } @else {
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+          Switch to Dark Mode
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- Page backdrop when mobile menu open -->
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-backdrop" (click)="closeMobileMenu()"></div>
+  }
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <router-outlet />
+  </main>
+</div>

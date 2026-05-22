@@ -1,0 +1,229 @@
+<div class="dashboard-page animate-fade-in">
+  <div class="container dashboard-inner">
+
+    <!-- ── Welcome Banner ───────────────────────────── -->
+    <div class="welcome-banner">
+      <div class="welcome-bg">
+        <div class="welcome-orb welcome-orb-1"></div>
+        <div class="welcome-orb welcome-orb-2"></div>
+      </div>
+      <div class="welcome-content">
+        <div class="welcome-left">
+          <p class="welcome-time">{{ greeting() }},</p>
+          <h1 class="welcome-name">{{ userName() }} 👋</h1>
+          <p class="welcome-sub">
+            Signed in as <strong class="text-brand">{{ email() ?? '—' }}</strong>
+            @if (role(); as r) {
+              &nbsp;·&nbsp;<span class="badge badge-brand badge-sm">{{ r }}</span>
+            }
+          </p>
+        </div>
+        <div class="welcome-right">
+          <a routerLink="/request-service" class="btn btn-primary btn-lg welcome-cta">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+            New Request
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Stats Cards ───────────────────────────────── -->
+    <div class="stats-row">
+      @if (loading()) {
+        <div class="stat-card skeleton-card"></div>
+        <div class="stat-card skeleton-card"></div>
+        <div class="stat-card skeleton-card"></div>
+      } @else {
+        <div class="stat-card animate-fade-in delay-100">
+          <div class="stat-card-icon icon-brand">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-card-value">{{ totalRequests }}</div>
+            <div class="stat-card-label">Total Requests</div>
+          </div>
+        </div>
+
+        <div class="stat-card animate-fade-in delay-200">
+          <div class="stat-card-icon icon-warning">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-card-value" style="color:var(--status-pending)">{{ activeRequests }}</div>
+            <div class="stat-card-label">Active</div>
+          </div>
+        </div>
+
+        <div class="stat-card animate-fade-in delay-300">
+          <div class="stat-card-icon icon-success">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-card-value" style="color:var(--status-completed)">{{ completedRequests }}</div>
+            <div class="stat-card-label">Completed</div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- ── Quick Actions ─────────────────────────────── -->
+    <section class="dashboard-section">
+      <h2 class="section-heading">Quick Actions</h2>
+      <div class="quick-actions-grid">
+
+        <a routerLink="/request-service" class="action-card action-card-primary card-hover animate-fade-in delay-100">
+          <div class="action-icon icon-danger">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3 class="action-title">Request Assistance</h3>
+            <p class="action-desc">Stranded? Get a tow or mechanic dispatched immediately.</p>
+          </div>
+          <div class="action-arrow">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+
+        <a routerLink="/my-requests" class="action-card card-hover animate-fade-in delay-200">
+          <div class="action-icon icon-success">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3 class="action-title">My Requests</h3>
+            <p class="action-desc">View, filter, and track all your service history.</p>
+          </div>
+          <div class="action-arrow">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+
+        <a routerLink="/profile" class="action-card card-hover animate-fade-in delay-300">
+          <div class="action-icon icon-brand">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </div>
+          <div class="action-body">
+            <h3 class="action-title">My Profile</h3>
+            <p class="action-desc">Manage your account settings and preferences.</p>
+          </div>
+          <div class="action-arrow">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── Recent Activity ───────────────────────────── -->
+    <section class="dashboard-section">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="section-heading mb-0">Recent Activity</h2>
+        <a routerLink="/my-requests" class="btn btn-ghost btn-sm">
+          View all
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      @if (loading()) {
+        <div class="activity-list">
+          @for (i of [1,2,3]; track i) {
+            <div class="activity-item">
+              <div class="skeleton skeleton-avatar" style="width:40px;height:40px;flex-shrink:0;"></div>
+              <div class="flex-1">
+                <div class="skeleton skeleton-text" style="width:40%;margin-bottom:6px;"></div>
+                <div class="skeleton skeleton-text" style="width:60%;height:0.75em;"></div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else if (recentRequests.length === 0) {
+        <div class="empty-state-mini">
+          <div class="icon-box icon-box-lg icon-brand">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-semibold mb-1">No requests yet</div>
+            <p class="text-sm text-secondary-c">Your recent service requests will appear here.</p>
+          </div>
+          <a routerLink="/request-service" class="btn btn-primary btn-sm">Make First Request</a>
+        </div>
+      } @else {
+        <div class="activity-list">
+          @for (r of recentRequests; track r.id) {
+            <a routerLink="/my-requests" class="activity-item card-hover">
+              <div class="activity-dot-wrapper">
+                <div class="status-dot {{ getDotClass(r.status) }}"></div>
+              </div>
+              <div class="flex-1 min-width-0">
+                <div class="flex justify-between items-start gap-3">
+                  <div>
+                    <div class="activity-title">{{ r.vehicleType }} · {{ r.vehicleNumber }}</div>
+                    <div class="activity-desc">{{ r.problemDescription | slice:0:60 }}{{ r.problemDescription.length > 60 ? '…' : '' }}</div>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <span class="badge {{ getStatusClass(r.status) }}">{{ r.status }}</span>
+                  </div>
+                </div>
+                <div class="activity-meta">
+                  <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  {{ r.createdAt | date:'mediumDate' }} · #{{ r.id.substring(0, 8).toUpperCase() }}
+                </div>
+              </div>
+              <div class="activity-arrow">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- ── Help Card ─────────────────────────────────── -->
+    <div class="help-card animate-fade-in delay-300">
+      <div class="help-card-inner">
+        <div class="help-icon">
+          <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="help-title">Need assistance?</h3>
+          <p class="help-desc">Our verified mechanics are on standby 24/7, ready to help you get back on the road.</p>
+        </div>
+        <a routerLink="/request-service" class="btn btn-primary ml-auto">
+          Request Now
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

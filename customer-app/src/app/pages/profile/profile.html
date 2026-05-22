@@ -1,0 +1,181 @@
+<div class="page-wrapper animate-fade-in">
+  <div class="container" style="padding-top:2.5rem;padding-bottom:3rem;max-width:900px;">
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="page-title">Profile & Account</h1>
+      <p class="page-subtitle">Manage your account information and preferences.</p>
+    </div>
+
+    <div class="profile-layout">
+
+      <!-- Left: Profile Card -->
+      <div class="profile-sidebar">
+        <div class="profile-card card">
+          <!-- Avatar -->
+          <div class="profile-avatar">
+            <span class="avatar-initials">{{ initials() }}</span>
+            <div class="avatar-ring"></div>
+          </div>
+
+          <h2 class="profile-name">{{ userName() }}</h2>
+          <p class="profile-email">{{ email() ?? '—' }}</p>
+
+          @if (role(); as r) {
+            <span class="badge badge-brand mt-3">{{ r }}</span>
+          }
+
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <div class="profile-stat-value">Member</div>
+              <div class="profile-stat-label">Status</div>
+            </div>
+            <div class="profile-stat-divider"></div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">Active</div>
+              <div class="profile-stat-label">Account</div>
+            </div>
+          </div>
+
+          <button class="btn btn-danger w-full mt-6" (click)="logout()" id="profile-logout-btn">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            Sign Out
+          </button>
+        </div>
+
+        <!-- Quick Nav -->
+        <div class="card mt-4">
+          <h4 class="quick-nav-title">Quick Links</h4>
+          <div class="quick-nav">
+            <a routerLink="/dashboard" class="quick-nav-link">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+              </svg>
+              Dashboard
+            </a>
+            <a routerLink="/request-service" class="quick-nav-link">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+              </svg>
+              New Request
+            </a>
+            <a routerLink="/my-requests" class="quick-nav-link">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/>
+              </svg>
+              My Requests
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Info Sections -->
+      <div class="profile-content">
+
+        <!-- Account Info -->
+        <div class="card mb-5 animate-fade-in delay-100">
+          <div class="info-section-header">
+            <div class="icon-box icon-box-sm icon-brand mr-3">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </div>
+            <h3 class="info-section-title">Account Information</h3>
+            <span class="badge badge-neutral ml-auto">Read only</span>
+          </div>
+
+          <div class="info-rows">
+            <div class="info-row">
+              <span class="info-label">Full Name</span>
+              <span class="info-value">{{ userName() }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Email Address</span>
+              <span class="info-value">{{ email() ?? '—' }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Account Role</span>
+              <span class="info-value">
+                <span class="badge badge-brand">{{ role() ?? 'USER' }}</span>
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Account Status</span>
+              <span class="info-value">
+                <span class="badge badge-completed">Active</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Profile Placeholder -->
+        <div class="card mb-5 animate-fade-in delay-200">
+          <div class="info-section-header">
+            <div class="icon-box icon-box-sm icon-warning mr-3">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+            </div>
+            <h3 class="info-section-title">Edit Profile</h3>
+            <span class="badge badge-warning ml-auto">Coming Soon</span>
+          </div>
+          <div class="coming-soon-placeholder">
+            <div class="icon-box icon-box-lg icon-brand mx-auto mb-4">
+              <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+              </svg>
+            </div>
+            <p class="text-secondary-c text-sm">Profile editing will be available in an upcoming release.</p>
+          </div>
+        </div>
+
+        <!-- Account Settings Placeholder -->
+        <div class="card animate-fade-in delay-300">
+          <div class="info-section-header">
+            <div class="icon-box icon-box-sm icon-purple mr-3">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <h3 class="info-section-title">Account Settings</h3>
+            <span class="badge badge-warning ml-auto">Coming Soon</span>
+          </div>
+
+          <div class="settings-rows">
+            <div class="setting-row">
+              <div>
+                <div class="setting-title">Email Notifications</div>
+                <div class="setting-desc">Receive updates about your requests via email</div>
+              </div>
+              <div class="setting-toggle disabled" title="Coming soon">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-title">SMS Alerts</div>
+                <div class="setting-desc">Get text message updates when your mechanic is en route</div>
+              </div>
+              <div class="setting-toggle disabled">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div>
+                <div class="setting-title">Two-Factor Authentication</div>
+                <div class="setting-desc">Add an extra layer of security to your account</div>
+              </div>
+              <div class="setting-toggle disabled">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

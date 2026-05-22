@@ -1,0 +1,229 @@
+/* ── Request Service Page ────────────────────────── */
+.page-wrapper {
+  flex: 1;
+  background: var(--bg);
+  min-height: calc(100vh - 68px);
+}
+
+/* ── Header ──────────────────────────────────────── */
+.rs-header { }
+
+.rs-icon-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.08) 100%);
+  border: 1px solid rgba(239,68,68,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--status-cancelled, #ef4444);
+  margin: 0 auto;
+}
+
+.rs-title {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.rs-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* ── Error ───────────────────────────────────────── */
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  color: var(--status-cancelled, #ef4444);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ── Card ────────────────────────────────────────── */
+.rs-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ── Form Section ────────────────────────────────── */
+.form-section {
+  padding: 2rem 2.5rem;
+}
+
+.form-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.step-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary, #6366f1), #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+}
+
+.form-section-title {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.form-section-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.form-divider {
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Fields Row ──────────────────────────────────── */
+.fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* ── Location Button ─────────────────────────────── */
+.location-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--surface-2);
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s ease;
+  min-height: 52px;
+}
+
+.location-btn:hover:not(:disabled) {
+  background: rgba(99,102,241,0.07);
+  border-color: rgba(99,102,241,0.35);
+  color: var(--primary, #6366f1);
+}
+
+.location-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Actions ─────────────────────────────────────── */
+.rs-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1.75rem 2.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface-0, rgba(0,0,0,0.1));
+  flex-wrap: wrap;
+}
+
+[data-theme="light"] .rs-actions {
+  background: rgba(0,0,0,0.02);
+}
+
+.rs-submit-btn {
+  flex: 2;
+  min-height: 52px;
+  font-size: 1rem;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 640px) {
+  .form-section { padding: 1.5rem; }
+  .fields-row { grid-template-columns: 1fr; }
+  .rs-actions { padding: 1.5rem; flex-direction: column; }
+  .rs-submit-btn { flex: 1; }
+}
+
+/* ── Map & Location ──────────────────────────────── */
+.map-container-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container {
+  height: 320px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  z-index: 10;
+  background: var(--surface-2);
+}
+
+/* Leaflet dark mode tile inversion */
+[data-theme="dark"] .map-container .leaflet-layer,
+[data-theme="dark"] .map-container .leaflet-control-zoom-in,
+[data-theme="dark"] .map-container .leaflet-control-zoom-out,
+[data-theme="dark"] .map-container .leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Fix leaflet z-index so it doesn't overlap navbar/modals */
+.leaflet-container {
+  z-index: 1 !important;
+}
+.leaflet-pane {
+  z-index: 1 !important;
+}
+.leaflet-top, .leaflet-bottom {
+  z-index: 2 !important;
+}
+
+.address-display {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.address-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(16,185,129,0.12);
+  color: var(--status-completed, #10b981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.address-text {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-weight: 500;
+}
