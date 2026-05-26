@@ -16,6 +16,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'request-service', component: RequestServicePage, canActivate: [authGuard] },
   { path: 'my-requests', component: MyRequests, canActivate: [authGuard] },
+  { path: 'track/:requestId', loadComponent: () => import('./pages/tracking/tracking').then((m) => m.TrackingPage), canActivate: [authGuard] },
   { path: 'profile', component: ProfilePage, canActivate: [authGuard] },
   { path: '**', redirectTo: '' },
 ];

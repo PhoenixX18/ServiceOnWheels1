@@ -19,8 +19,11 @@ public class ServiceRequestResponse {
     private String vehicleType;
     private String vehicleNumber;
     private String problemDescription;
+    private String selectedIssue;
+    private String additionalNotes;
     private Double latitude;
     private Double longitude;
+    private String address;
     private RequestStatus status;
     private String assignedMechanicId;
     private LocalDateTime createdAt;

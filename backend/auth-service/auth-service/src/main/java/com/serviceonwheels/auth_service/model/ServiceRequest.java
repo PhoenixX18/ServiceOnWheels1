@@ -30,13 +30,39 @@ public class ServiceRequest {
 
     private String problemDescription;
 
+    private String selectedIssue;
+
+    private String additionalNotes;
+
     private Double latitude;
 
     private Double longitude;
 
+    private String address;
+
     private RequestStatus status;
 
     private String assignedMechanicId;
+
+    // ── Tracking fields ──────────────────────────────────
+    private TrackingStatus trackingStatus;
+
+    private String mechanicName;
+
+    private String mechanicPhone;
+
+    private String mechanicVehicle;
+
+    private Double mechanicRating;
+
+    /** Mechanic's starting latitude (simulation origin). */
+    private Double mechanicStartLat;
+
+    /** Mechanic's starting longitude (simulation origin). */
+    private Double mechanicStartLng;
+
+    /** Timestamp when mechanic was assigned. Used to compute simulated travel progress. */
+    private LocalDateTime assignedAt;
 
     @CreatedDate
     private LocalDateTime createdAt;

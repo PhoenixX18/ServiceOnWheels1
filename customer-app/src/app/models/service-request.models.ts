@@ -10,8 +10,11 @@ export interface CreateServiceRequestPayload {
   vehicleType: string;
   vehicleNumber: string;
   problemDescription: string;
+  selectedIssue?: string;
+  additionalNotes?: string;
   latitude: number;
   longitude: number;
+  address: string;
 }
 
 export interface ServiceRequestResponse {
@@ -20,8 +23,11 @@ export interface ServiceRequestResponse {
   vehicleType: string;
   vehicleNumber: string;
   problemDescription: string;
+  selectedIssue?: string;
+  additionalNotes?: string;
   latitude: number;
   longitude: number;
+  address: string;
   status: RequestStatus;
   assignedMechanicId: string | null;
   /** ISO-8601 string from the API */

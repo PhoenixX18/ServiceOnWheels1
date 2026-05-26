@@ -1,131 +1,216 @@
-<div class="auth-split-layout animate-fade-in">
-  <div class="auth-left flex justify-center items-center p-8">
-    <div class="card glass-panel w-full max-w-md p-8" style="max-width: 480px; margin-top: 2rem; margin-bottom: 2rem;">
-      <div class="text-center mb-8">
-        <h1 class="title text-2xl">Create Account</h1>
-        <p class="text-secondary mt-2">Join Service on Wheels today</p>
+<div class="auth-layout animate-fade-in">
+  
+  <!-- Left Panel: Form -->
+  <div class="auth-form-panel">
+    <div class="auth-form-container">
+
+      <!-- Logo -->
+      <a routerLink="/" class="auth-brand mb-10">
+        <div class="auth-brand-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <span class="auth-brand-name">Service on Wheels</span>
+      </a>
+
+      <div class="mb-8">
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle mt-2">Get started in under a minute. No credit card required.</p>
       </div>
 
+      <!-- Error -->
       @if (errorMessage(); as err) {
-        <div class="badge badge-cancelled w-full justify-center mb-6 text-sm" style="display: flex; padding: 1rem; border-radius: 8px;">
+        <div class="auth-error animate-fade-in mb-6">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
           {{ err }}
         </div>
       }
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col gap-md">
-        <div class="form-group mb-0">
-          <label class="form-label">Full Name</label>
-          <input type="text" formControlName="name" autocomplete="name" class="form-control" placeholder="John Doe" />
+      <!-- Form -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="auth-form">
+
+        <div class="form-group mb-5">
+          <label class="form-label" for="name">Full name</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            autocomplete="name"
+            class="form-control"
+            placeholder="Jane Smith"
+            [class.error]="form.controls.name.touched && form.controls.name.invalid"
+          />
           @if (form.controls.name.touched && form.controls.name.invalid) {
-            <span class="text-danger text-sm mt-1 block" style="color: #EF4444; font-size: 0.875rem; margin-top: 0.25rem;">2–100 characters required</span>
+            <div class="form-error">2–100 characters required</div>
           }
         </div>
 
-        <div class="flex gap-md flex-wrap">
-          <div class="form-group mb-0 flex-1">
-            <label class="form-label">Email Address</label>
-            <input type="email" formControlName="email" autocomplete="email" class="form-control" placeholder="john@example.com" />
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="mb-5">
+          <div class="form-group mb-0">
+            <label class="form-label" for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              autocomplete="email"
+              class="form-control"
+              placeholder="jane@example.com"
+              [class.error]="form.controls.email.touched && form.controls.email.invalid"
+            />
             @if (form.controls.email.touched && form.controls.email.invalid) {
-              <span class="text-danger text-sm mt-1 block" style="color: #EF4444; font-size: 0.875rem; margin-top: 0.25rem;">Valid email is required</span>
+              <div class="form-error">Valid email required</div>
             }
           </div>
 
-          <div class="form-group mb-0 flex-1">
-            <label class="form-label">Phone Number</label>
-            <input type="tel" formControlName="phoneNumber" autocomplete="tel" maxlength="10" class="form-control" placeholder="10 digit mobile" />
+          <div class="form-group mb-0">
+            <label class="form-label" for="phoneNumber">Phone number</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              formControlName="phoneNumber"
+              autocomplete="tel"
+              maxlength="10"
+              class="form-control"
+              placeholder="10-digit mobile"
+              [class.error]="form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid"
+            />
             @if (form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid) {
-              <span class="text-danger text-sm mt-1 block" style="color: #EF4444; font-size: 0.875rem; margin-top: 0.25rem;">Valid Indian mobile required</span>
+              <div class="form-error">Valid 10-digit mobile required</div>
             }
           </div>
         </div>
 
-        <div class="form-group mb-0">
-          <label class="form-label">Password</label>
-          <div class="relative" style="position: relative;">
-            <input [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="new-password" class="form-control" style="padding-right: 3rem;" placeholder="••••••••" />
-            <button type="button" class="password-toggle" (click)="togglePassword()" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 0.25rem;">
-              @if (showPassword()) {
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
-              } @else {
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.543 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-              }
-            </button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="mb-5">
+          <div class="form-group mb-0">
+            <label class="form-label" for="password">Password</label>
+            <div style="position:relative;">
+              <input
+                [type]="showPassword() ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                autocomplete="new-password"
+                class="form-control"
+                style="padding-right: 3rem;"
+                placeholder="Min. 8 characters"
+                [class.error]="form.controls.password.touched && form.controls.password.invalid"
+              />
+              <button type="button" class="password-eye-btn" (click)="togglePassword()" aria-label="Toggle password">
+                @if (showPassword()) {
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                  </svg>
+                } @else {
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.543 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                }
+              </button>
+            </div>
+            @if (form.controls.password.touched && form.controls.password.invalid) {
+              <div class="form-error">At least 8 characters</div>
+            }
           </div>
-          @if (form.controls.password.touched && form.controls.password.invalid) {
-            <span class="text-danger text-sm mt-1 block" style="color: #EF4444; font-size: 0.875rem; margin-top: 0.25rem;">At least 8 characters</span>
-          }
+
+          <div class="form-group mb-0">
+            <label class="form-label" for="confirmPassword">Confirm password</label>
+            <div style="position:relative;">
+              <input
+                [type]="showConfirmPassword() ? 'text' : 'password'"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                autocomplete="new-password"
+                class="form-control"
+                style="padding-right: 3rem;"
+                placeholder="Repeat password"
+                [class.error]="form.controls.confirmPassword.touched && (form.controls.confirmPassword.invalid || form.errors?.['passwordMismatch'])"
+              />
+              <button type="button" class="password-eye-btn" (click)="toggleConfirmPassword()" aria-label="Toggle password">
+                @if (showConfirmPassword()) {
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                  </svg>
+                } @else {
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.543 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                }
+              </button>
+            </div>
+            @if (form.controls.confirmPassword.touched && (form.controls.confirmPassword.invalid || form.errors?.['passwordMismatch'])) {
+              <div class="form-error">Passwords must match</div>
+            }
+          </div>
         </div>
 
-        <div class="form-group mb-0">
-          <label class="form-label">Confirm Password</label>
-          <div class="relative" style="position: relative;">
-            <input [type]="showConfirmPassword() ? 'text' : 'password'" formControlName="confirmPassword" autocomplete="new-password" class="form-control" style="padding-right: 3rem;" placeholder="••••••••" />
-            <button type="button" class="password-toggle" (click)="toggleConfirmPassword()" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 0.25rem;">
-              @if (showConfirmPassword()) {
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
-              } @else {
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.543 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-              }
-            </button>
-          </div>
-          @if (form.controls.confirmPassword.touched && (form.controls.confirmPassword.invalid || form.errors?.['passwordMismatch'])) {
-            <span class="text-danger text-sm mt-1 block" style="color: #EF4444; font-size: 0.875rem; margin-top: 0.25rem;">Passwords must match</span>
-          }
-        </div>
-
-        <button type="submit" class="btn btn-primary w-full mt-4" style="width: 100%; padding: 0.875rem;" [disabled]="submitting()">
+        <button type="submit" class="btn btn-primary w-full auth-submit-btn" [disabled]="submitting()">
           @if (submitting()) {
-            <svg class="animate-spin" style="animation: spin 1s linear infinite; margin-right: 0.5rem;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity: 0.25;"></circle><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="opacity:0.25;"></circle>
+              <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
             Creating Account...
           } @else {
-            Register
+            Create account
           }
         </button>
+
       </form>
 
-      <p class="text-center text-secondary mt-6">
-        Already registered? <a routerLink="/login" class="text-primary font-bold hover:underline" style="color: var(--primary-color);">Sign in</a>
-      </p>
-    </div>
-  </div>
-
-  <div class="auth-right hidden md:flex" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 1) 100%);">
-    <div class="flex flex-col justify-center items-center p-12 text-center h-full w-full">
-      <div class="mb-8 p-4 rounded-full" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
-        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" viewBox="0 0 24 24" stroke="var(--secondary-color)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+      <div class="mt-8 text-center text-sm" style="color: var(--text-secondary);">
+        Already have an account? 
+        <a routerLink="/login" class="font-medium hover-underline" style="color: var(--text-primary);">Sign in</a>
       </div>
-      <h2 class="title text-3xl mb-4">Help is on the way.</h2>
-      <p class="text-secondary max-w-md" style="font-size: 1.125rem;">
-        Join thousands of drivers who trust Service on Wheels for emergency roadside assistance.
-      </p>
+
     </div>
   </div>
-</div>
 
-<style>
-.auth-split-layout {
-  display: flex;
-  min-height: calc(100vh - 72px);
-}
-.auth-left {
-  flex: 1;
-  display: flex;
-}
-.auth-right {
-  flex: 1.2;
-  display: none;
-}
-@media (min-width: 768px) {
-  .auth-right {
-    display: flex;
-  }
-}
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.mb-0 { margin-bottom: 0 !important; }
-.flex-1 { flex: 1; min-width: 180px; }
-.w-full { width: 100%; }
-.block { display: block; }
-</style>
+  <!-- Right Panel: Visual -->
+  <div class="auth-visual-panel">
+    <div class="auth-visual-bg">
+      <div class="auth-visual-orb auth-orb-1"></div>
+      <div class="auth-visual-orb auth-orb-2"></div>
+    </div>
+    
+    <div class="auth-visual-content">
+      <div>
+        <h2 class="avt-title">Join the leading<br/>roadside network.</h2>
+        <p class="avt-desc">
+          Get peace of mind with 24/7 access to verified mechanics, transparent pricing, and real-time assistance tracking.
+        </p>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-list-item">
+          <div class="feature-list-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          Under 30-minute average response time
+        </div>
+        <div class="feature-list-item">
+          <div class="feature-list-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          Network of 5,000+ verified professionals
+        </div>
+        <div class="feature-list-item">
+          <div class="feature-list-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          Secure platform with live tracking
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -4,6 +4,7 @@ import { AfterViewInit, Component, inject, OnDestroy, PLATFORM_ID, signal } from
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ServiceRequestService } from '../../services/service-request.service';
+import { LocationService } from '../../services/location.service';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class RequestServicePage implements AfterViewInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly http = inject(HttpClient);
+  private readonly locationService = inject(LocationService);
 
   readonly errorMessage = signal<string | null>(null);
   readonly submitting = signal(false);
@@ -33,7 +34,9 @@ export class RequestServicePage implements AfterViewInit, OnDestroy {
   readonly form = this.fb.nonNullable.group({
     vehicleType: ['', [Validators.required, Validators.maxLength(80)]],
     vehicleNumber: ['', [Validators.required, Validators.maxLength(32)]],
-    problemDescription: ['', [Validators.required, Validators.maxLength(4000)]],
+    selectedIssue: ['', [Validators.required]],
+    customIssue: ['', [Validators.maxLength(4000)]],
+    additionalNotes: ['', [Validators.maxLength(4000)]],
     latitude: this.fb.control<number | null>(null, [
       Validators.required,
       Validators.min(-90),
@@ -44,7 +47,21 @@ export class RequestServicePage implements AfterViewInit, OnDestroy {
       Validators.min(-180),
       Validators.max(180),
     ]),
+    address: ['', [Validators.required, Validators.maxLength(255)]],
   });
+
+  constructor() {
+    this.form.controls.selectedIssue.valueChanges.subscribe((val) => {
+      const customCtrl = this.form.controls.customIssue;
+      if (val === 'Other') {
+        customCtrl.setValidators([Validators.required, Validators.maxLength(4000)]);
+      } else {
+        customCtrl.clearValidators();
+        customCtrl.setValidators([Validators.maxLength(4000)]);
+      }
+      customCtrl.updateValueAndValidity();
+    });
+  }
 
   async ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -112,39 +129,33 @@ export class RequestServicePage implements AfterViewInit, OnDestroy {
   }
 
   private fetchAddress(lat: number, lng: number) {
-    this.detectedAddress.set('Detecting address...');
-    this.http.get<any>(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-      .subscribe({
-        next: (res) => {
-          const address = res.display_name || 'Address not found';
-          this.detectedAddress.set(address);
-        },
-        error: () => {
-          this.detectedAddress.set('Failed to fetch address');
-          this.toast.error('Geocoding Failed', 'Could not fetch address for this location.');
-        }
-      });
+    this.detectedAddress.set('Locating address...');
+    this.locationService.reverseGeocode(lat, lng).subscribe({
+      next: (address) => {
+        this.detectedAddress.set(address);
+        this.form.patchValue({ address });
+      },
+      error: () => {
+        this.detectedAddress.set('Address not found');
+        this.toast.error('Geocoding Failed', 'Could not fetch address for this location.');
+      }
+    });
   }
 
   useMyLocation(): void {
     this.errorMessage.set(null);
-    if (!navigator.geolocation) {
-      this.toast.error('Not supported', 'Location is not supported in this browser.');
-      return;
-    }
     this.locating.set(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
+    
+    this.locationService.getCurrentPosition()
+      .then(pos => {
         this.locating.set(false);
-        this.updateLocation(pos.coords.latitude, pos.coords.longitude);
+        this.updateLocation(pos.lat, pos.lng);
         this.toast.success('Location set', 'Your current location has been detected.');
-      },
-      () => {
+      })
+      .catch(errorMsg => {
         this.locating.set(false);
-        this.toast.warning('Location failed', 'Could not read your location. Please click on the map to select.');
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 },
-    );
+        this.toast.warning('Location failed', errorMsg);
+      });
   }
 
   onSubmit(): void {
@@ -164,13 +175,19 @@ export class RequestServicePage implements AfterViewInit, OnDestroy {
     }
 
     this.submitting.set(true);
+
+    const problemDesc = raw.selectedIssue === 'Other' ? raw.customIssue.trim() : raw.selectedIssue;
+
     this.api
       .createRequest({
         vehicleType: raw.vehicleType.trim(),
         vehicleNumber: raw.vehicleNumber.trim(),
-        problemDescription: raw.problemDescription.trim(),
+        problemDescription: problemDesc,
+        selectedIssue: raw.selectedIssue,
+        additionalNotes: raw.additionalNotes.trim(),
         latitude,
         longitude,
+        address: raw.address.trim() || 'Unknown location',
       })
       .subscribe({
         next: () => {

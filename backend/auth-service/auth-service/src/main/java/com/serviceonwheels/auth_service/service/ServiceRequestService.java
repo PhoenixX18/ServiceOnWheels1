@@ -28,12 +28,30 @@ public class ServiceRequestService {
                 .vehicleType(dto.getVehicleType().trim())
                 .vehicleNumber(dto.getVehicleNumber().trim())
                 .problemDescription(dto.getProblemDescription().trim())
+                .selectedIssue(dto.getSelectedIssue() != null ? dto.getSelectedIssue().trim() : null)
+                .additionalNotes(dto.getAdditionalNotes() != null ? dto.getAdditionalNotes().trim() : null)
                 .latitude(dto.getLatitude())
                 .longitude(dto.getLongitude())
+                .address(dto.getAddress().trim())
                 .status(RequestStatus.PENDING)
                 .assignedMechanicId(null)
+                .trackingStatus(null) // will be set after save (need ID)
                 .build();
         ServiceRequest saved = serviceRequestRepository.save(entity);
+
+        // Auto-assign mechanic deterministically using the generated ID
+        String id = saved.getId();
+        saved.setTrackingStatus(com.serviceonwheels.auth_service.model.TrackingStatus.ASSIGNED);
+        saved.setAssignedMechanicId(id + "-mech");
+        saved.setMechanicName(TrackingService.pickName(id));
+        saved.setMechanicPhone(TrackingService.pickPhone(id));
+        saved.setMechanicVehicle(TrackingService.pickVehicle(id));
+        saved.setMechanicRating(TrackingService.pickRating(id));
+        saved.setMechanicStartLat(TrackingService.startLat(dto.getLatitude()));
+        saved.setMechanicStartLng(TrackingService.startLng(dto.getLongitude()));
+        saved.setAssignedAt(java.time.LocalDateTime.now());
+        saved = serviceRequestRepository.save(saved);
+
         return toResponse(saved);
     }
 
@@ -70,8 +88,11 @@ public class ServiceRequestService {
                 .vehicleType(entity.getVehicleType())
                 .vehicleNumber(entity.getVehicleNumber())
                 .problemDescription(entity.getProblemDescription())
+                .selectedIssue(entity.getSelectedIssue())
+                .additionalNotes(entity.getAdditionalNotes())
                 .latitude(entity.getLatitude())
                 .longitude(entity.getLongitude())
+                .address(entity.getAddress())
                 .status(entity.getStatus())
                 .assignedMechanicId(entity.getAssignedMechanicId())
                 .createdAt(entity.getCreatedAt())

@@ -6,6 +6,31 @@ import { routes } from './app.routes';
 
 describe('App', () => {
   beforeEach(async () => {
+    // Mock localStorage for AuthService
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: () => null,
+        setItem: () => null,
+        removeItem: () => null
+      },
+      writable: true
+    });
+
+    // Mock matchMedia for ThemeService
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: (query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => {}, // Deprecated
+        removeListener: () => {}, // Deprecated
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      })
+    });
+
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [provideRouter(routes), provideHttpClient()],
@@ -22,6 +47,6 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.brand')?.textContent).toContain('Service on Wheels');
+    expect(compiled.querySelector('.brand')?.textContent).toContain('Serviceon Wheels™');
   });
 });
