@@ -6,7 +6,7 @@ import type { ServiceRequestResponse } from '../../models/service-request.models
 import { ServiceRequestService } from '../../services/service-request.service';
 import { ToastService } from '../../services/toast.service';
 
-const STATUS_ORDER = ['PENDING', 'ACCEPTED', 'IN_PROGRESS', 'COMPLETED'];
+const STATUS_ORDER = ['PENDING', 'ASSIGNED', 'ON_THE_WAY', 'ARRIVED', 'IN_SERVICE', 'COMPLETED'];
 
 @Component({
   selector: 'app-my-requests',
@@ -27,7 +27,7 @@ export class MyRequests implements OnInit {
     const filter = this.currentFilter();
     if (filter === 'All') return this.requests();
     if (filter === 'Pending') return this.requests().filter(r =>
-      r.status === 'PENDING' || r.status === 'ACCEPTED' || r.status === 'IN_PROGRESS' || r.status === 'TOW_REQUIRED'
+      ['PENDING','ACCEPTED','IN_PROGRESS','TOW_REQUIRED','ASSIGNED','ON_THE_WAY','ARRIVED','IN_SERVICE'].includes(r.status)
     );
     if (filter === 'Completed') return this.requests().filter(r => r.status === 'COMPLETED');
     return this.requests();
@@ -56,7 +56,7 @@ export class MyRequests implements OnInit {
 
   getActiveCount(): number {
     return this.requests().filter(r =>
-      ['PENDING','ACCEPTED','IN_PROGRESS','TOW_REQUIRED'].includes(r.status)
+      ['PENDING','ACCEPTED','IN_PROGRESS','TOW_REQUIRED','ASSIGNED','ON_THE_WAY','ARRIVED','IN_SERVICE'].includes(r.status)
     ).length;
   }
 
@@ -67,8 +67,12 @@ export class MyRequests implements OnInit {
   getStatusClass(status: string): string {
     switch (status) {
       case 'PENDING': return 'badge-pending';
-      case 'ACCEPTED': return 'badge-accepted';
-      case 'IN_PROGRESS': return 'badge-progress';
+      case 'ACCEPTED': 
+      case 'ASSIGNED': return 'badge-accepted';
+      case 'IN_PROGRESS':
+      case 'ON_THE_WAY':
+      case 'ARRIVED':
+      case 'IN_SERVICE': return 'badge-progress';
       case 'COMPLETED': return 'badge-completed';
       case 'CANCELLED': return 'badge-cancelled';
       case 'TOW_REQUIRED': return 'badge-tow';
@@ -79,12 +83,20 @@ export class MyRequests implements OnInit {
   getDotClass(status: string): string {
     switch (status) {
       case 'PENDING': return 'dot-pending';
-      case 'ACCEPTED': return 'dot-accepted';
-      case 'IN_PROGRESS': return 'dot-progress';
+      case 'ACCEPTED':
+      case 'ASSIGNED': return 'dot-accepted';
+      case 'IN_PROGRESS':
+      case 'ON_THE_WAY':
+      case 'ARRIVED':
+      case 'IN_SERVICE': return 'dot-progress';
       case 'COMPLETED': return 'dot-completed';
       case 'CANCELLED': return 'dot-cancelled';
       default: return 'dot-cancelled';
     }
+  }
+
+  formatStatus(status: string): string {
+    return status.replace(/_/g, ' ');
   }
 
   isStepDone(currentStatus: string, stepStatus: string): boolean {

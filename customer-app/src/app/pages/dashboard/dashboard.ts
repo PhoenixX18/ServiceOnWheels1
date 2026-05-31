@@ -1,4 +1,4 @@
-import { DatePipe, isPlatformBrowser, SlicePipe } from '@angular/common';
+import { DatePipe, isPlatformBrowser, SlicePipe, TitleCasePipe } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -7,7 +7,7 @@ import type { ServiceRequestResponse } from '../../models/service-request.models
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink, DatePipe, SlicePipe],
+  imports: [RouterLink, DatePipe, SlicePipe, TitleCasePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -54,8 +54,11 @@ export class Dashboard implements OnInit {
   }
 
   get totalRequests(): number { return this.requests().length; }
+  get pendingRequests(): number {
+    return this.requests().filter(r => r.status === 'PENDING').length;
+  }
   get activeRequests(): number {
-    return this.requests().filter(r => ['PENDING','ACCEPTED','IN_PROGRESS'].includes(r.status)).length;
+    return this.requests().filter(r => ['ACCEPTED','IN_PROGRESS','ASSIGNED','ON_THE_WAY','ARRIVED','IN_SERVICE'].includes(r.status)).length;
   }
   get completedRequests(): number {
     return this.requests().filter(r => r.status === 'COMPLETED').length;
@@ -69,8 +72,12 @@ export class Dashboard implements OnInit {
   getStatusClass(status: string): string {
     switch (status) {
       case 'PENDING': return 'badge-pending';
-      case 'ACCEPTED': return 'badge-accepted';
-      case 'IN_PROGRESS': return 'badge-progress';
+      case 'ACCEPTED': 
+      case 'ASSIGNED': return 'badge-accepted';
+      case 'IN_PROGRESS':
+      case 'ON_THE_WAY': 
+      case 'ARRIVED':
+      case 'IN_SERVICE': return 'badge-progress';
       case 'COMPLETED': return 'badge-completed';
       case 'CANCELLED': return 'badge-cancelled';
       case 'TOW_REQUIRED': return 'badge-tow';
@@ -81,8 +88,12 @@ export class Dashboard implements OnInit {
   getDotClass(status: string): string {
     switch (status) {
       case 'PENDING': return 'dot-pending';
-      case 'ACCEPTED': return 'dot-accepted';
-      case 'IN_PROGRESS': return 'dot-progress';
+      case 'ACCEPTED':
+      case 'ASSIGNED': return 'dot-accepted';
+      case 'IN_PROGRESS':
+      case 'ON_THE_WAY':
+      case 'ARRIVED':
+      case 'IN_SERVICE': return 'dot-progress';
       case 'COMPLETED': return 'dot-completed';
       case 'CANCELLED': return 'dot-cancelled';
       default: return 'dot-cancelled';

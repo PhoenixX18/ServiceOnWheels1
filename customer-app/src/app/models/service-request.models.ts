@@ -4,7 +4,12 @@ export type RequestStatus =
   | 'IN_PROGRESS'
   | 'COMPLETED'
   | 'CANCELLED'
-  | 'TOW_REQUIRED';
+  | 'TOW_REQUIRED'
+  // Phase 4 additions
+  | 'ASSIGNED'
+  | 'ON_THE_WAY'
+  | 'ARRIVED'
+  | 'IN_SERVICE';
 
 export interface CreateServiceRequestPayload {
   vehicleType: string;
@@ -29,7 +34,19 @@ export interface ServiceRequestResponse {
   longitude: number;
   address: string;
   status: RequestStatus;
-  assignedMechanicId: string | null;
-  /** ISO-8601 string from the API */
+  assignedMechanicId?: string;
   createdAt: string;
+
+  // Phase 4 - Mechanic details
+  mechanicName?: string;
+  mechanicPhone?: string;
+  mechanicVehicle?: string;
+  mechanicRating?: number;
+
+  // Phase 4 - Audit timestamps
+  assignedAt?: string;
+  arrivedAt?: string;
+  serviceStartedAt?: string;
+  completedAt?: string;
+  cancelledAt?: string;
 }

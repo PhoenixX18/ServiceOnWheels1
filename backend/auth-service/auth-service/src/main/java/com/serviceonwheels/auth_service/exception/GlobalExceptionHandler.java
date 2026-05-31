@@ -188,6 +188,78 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(
+            IllegalArgumentException ex,
+            HttpServletRequest request) {
+
+        log.warn("Illegal argument at [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request",
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                null);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalState(
+            IllegalStateException ex,
+            HttpServletRequest request) {
+
+        log.warn("Illegal state transition at [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                "Conflict",
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                null);
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
+    @ExceptionHandler(MechanicNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMechanicNotFound(
+            MechanicNotFoundException ex,
+            HttpServletRequest request) {
+
+        log.warn("Mechanic not found at [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Not Found",
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                null);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(org.springframework.mail.MailException.class)
+    public ResponseEntity<ErrorResponse> handleMailException(
+            org.springframework.mail.MailException ex,
+            HttpServletRequest request) {
+
+        log.error("Mail dispatch failed at [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Email Dispatch Failed",
+                "Unable to send email. Please verify SMTP configuration or try again later.",
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                null);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(
             Exception ex,

@@ -4,8 +4,6 @@
     <!-- ── Welcome Banner ───────────────────────────── -->
     <div class="welcome-banner">
       <div class="welcome-bg">
-        <div class="welcome-orb welcome-orb-1"></div>
-        <div class="welcome-orb welcome-orb-2"></div>
       </div>
       <div class="welcome-content">
         <div class="welcome-left">
@@ -55,7 +53,19 @@
             </svg>
           </div>
           <div>
-            <div class="stat-card-value" style="color:var(--status-pending)">{{ activeRequests }}</div>
+            <div class="stat-card-value" style="color:var(--status-pending)">{{ pendingRequests }}</div>
+            <div class="stat-card-label">Pending</div>
+          </div>
+        </div>
+
+        <div class="stat-card animate-fade-in delay-300">
+          <div class="stat-card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <div class="stat-card-value" style="color:#3b82f6">{{ activeRequests }}</div>
             <div class="stat-card-label">Active</div>
           </div>
         </div>
@@ -171,26 +181,26 @@
         </div>
       } @else {
         <div class="activity-list">
-          @for (r of recentRequests; track r.id) {
-            <a routerLink="/my-requests" class="activity-item card-hover">
+          @for (req of recentRequests; track req.id) {
+            <a [routerLink]="['/track', req.id]" class="activity-item card-hover">
               <div class="activity-dot-wrapper">
-                <div class="status-dot {{ getDotClass(r.status) }}"></div>
+                <div class="status-dot {{ getDotClass(req.status) }}"></div>
               </div>
               <div class="flex-1 min-width-0">
                 <div class="flex justify-between items-start gap-3">
                   <div>
-                    <div class="activity-title">{{ r.vehicleType }} · {{ r.vehicleNumber }}</div>
-                    <div class="activity-desc">{{ r.problemDescription | slice:0:60 }}{{ r.problemDescription.length > 60 ? '…' : '' }}</div>
+                    <div class="activity-title">{{ req.vehicleType }} · {{ req.vehicleNumber }}</div>
+                    <div class="activity-desc">{{ req.selectedIssue && req.selectedIssue !== 'Other' ? req.selectedIssue : (req.problemDescription | slice:0:40) }}{{ req.problemDescription.length > 40 ? '...' : '' }}</div>
                   </div>
                   <div class="flex-shrink-0">
-                    <span class="badge {{ getStatusClass(r.status) }}">{{ r.status }}</span>
+                    <span class="badge {{ getStatusClass(req.status) }}">{{ req.status.replace('_', ' ') | titlecase }}</span>
                   </div>
                 </div>
                 <div class="activity-meta">
                   <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                   </svg>
-                  {{ r.createdAt | date:'mediumDate' }} · #{{ r.id.substring(0, 8).toUpperCase() }}
+                  {{ req.createdAt | date:'mediumDate' }} · #{{ req.id.substring(0, 8).toUpperCase() }}
                 </div>
               </div>
               <div class="activity-arrow">

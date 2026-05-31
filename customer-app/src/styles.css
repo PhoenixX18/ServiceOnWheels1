@@ -8,53 +8,53 @@
 
 /* ── Design Tokens ───────────────────────────────────── */
 :root {
-  /* Brand Colors */
-  --brand-50:  #eef2ff;
-  --brand-100: #e0e7ff;
-  --brand-200: #c7d2fe;
-  --brand-300: #a5b4fc;
-  --brand-400: #818cf8;
-  --brand-500: #6366f1;
-  --brand-600: #4f46e5;
-  --brand-700: #4338ca;
-  --brand-800: #3730a3;
-  --brand-900: #312e81;
+  /* Brand Colors — Premium Red */
+  --brand-50:  #fef2f2;
+  --brand-100: #fee2e2;
+  --brand-200: #fecaca;
+  --brand-300: #fca5a5;
+  --brand-400: #f87171;
+  --brand-500: #8B1E1E;
+  --brand-600: #731616;
+  --brand-700: #5C1111;
+  --brand-800: #7F1D1D;
+  --brand-900: #450A0A;
 
   --accent-500: #10b981;
   --accent-600: #059669;
 
   /* Primary */
-  --primary:        #6366f1;
-  --primary-hover:  #4f46e5;
-  --primary-glow:   rgba(99, 102, 241, 0.35);
+  --primary:        #8B1E1E;
+  --primary-hover:  #731616;
+  --primary-glow:   rgba(139, 30, 30, 0.25);
   --secondary:      #10b981;
   --secondary-hover:#059669;
 
-  /* Dark theme surfaces */
-  --bg:             #080d1a;
-  --bg-secondary:   #0d1526;
-  --surface-0:      #111827;
-  --surface-1:      #1a2235;
-  --surface-2:      #212d42;
-  --surface-3:      #2a3a54;
-  --border:         rgba(255,255,255,0.07);
-  --border-focus:   rgba(99,102,241,0.6);
+  /* Dark theme surfaces — Deep Black & Graphite */
+  --bg:             #111111;
+  --bg-secondary:   #111111;
+  --surface-0:      #151515;
+  --surface-1:      #1E1E1E;
+  --surface-2:      #242424;
+  --surface-3:      #2E2E2E;
+  --border:         rgba(255,255,255,0.08);
+  --border-focus:   rgba(139, 30, 30,0.6);
 
   /* Text */
-  --text-primary:   #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted:     #4b5563;
-  --text-inverse:   #0f172a;
+  --text-primary:   #F5F5F5;
+  --text-secondary: #B0B0B0;
+  --text-muted:     #6B7280;
+  --text-inverse:   #111111;
 
   /* Status */
-  --status-pending:   #f59e0b;
-  --status-accepted:  #3b82f6;
-  --status-progress:  #f97316;
-  --status-completed: #10b981;
-  --status-cancelled: #ef4444;
-  --status-tow:       #8b5cf6;
+  --status-pending:   #F59E0B;
+  --status-accepted:  #3B82F6;
+  --status-progress:  #F97316;
+  --status-completed: #10B981;
+  --status-cancelled: #8B1E1E;
+  --status-tow:       #8B5CF6;
 
-  /* Spacing scale */
+  /* Spacing scale (8px system) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -67,25 +67,23 @@
   --space-16: 4rem;
   --space-20: 5rem;
 
-  /* Radius */
+  /* Radius — Moderate, not too rounded */
   --radius-sm:  6px;
   --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-xl:  24px;
-  --radius-2xl: 32px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-xs:  0 1px 2px rgba(0,0,0,0.3);
-  --shadow-sm:  0 2px 8px rgba(0,0,0,0.4);
-  --shadow-md:  0 8px 24px rgba(0,0,0,0.5);
-  --shadow-lg:  0 20px 40px rgba(0,0,0,0.6);
-  --shadow-xl:  0 32px 64px rgba(0,0,0,0.7);
-  --shadow-brand: 0 8px 32px rgba(99,102,241,0.35);
-  --shadow-brand-sm: 0 4px 16px rgba(99,102,241,0.25);
+  /* Shadows — Realistic, no glow */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.6);
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.7);
+  --shadow-md:  0 8px 24px rgba(0,0,0,0.8);
+  --shadow-lg:  0 20px 40px rgba(0,0,0,0.9);
+  --shadow-xl:  0 32px 64px rgba(0,0,0,0.95);
 
   /* Typography */
-  --font-sans:   'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-sans:   'Inter', system-ui, -apple-system, sans-serif;
   --font-display:'Outfit', 'Inter', system-ui, sans-serif;
 
   /* Transitions */
@@ -98,10 +96,10 @@
   --duration-slow:   400ms;
   --transition: var(--duration-normal) var(--ease);
 
-  /* Glassmorphism */
-  --glass-bg:     rgba(26, 34, 53, 0.7);
+  /* Glass — Subtle dark, not heavy */
+  --glass-bg:     rgba(21, 21, 21, 0.85);
   --glass-border: rgba(255,255,255,0.08);
-  --glass-blur:   16px;
+  --glass-blur:   12px;
 
   /* Z-index scale */
   --z-base:    0;
@@ -114,27 +112,27 @@
 
 /* Light Mode */
 [data-theme="light"] {
-  --bg:             #f8fafc;
-  --bg-secondary:   #f1f5f9;
-  --surface-0:      #ffffff;
-  --surface-1:      #f8fafc;
-  --surface-2:      #f1f5f9;
-  --surface-3:      #e2e8f0;
+  --bg:             #FAFAFA;
+  --bg-secondary:   #F5F5F5;
+  --surface-0:      #FFFFFF;
+  --surface-1:      #FAFAFA;
+  --surface-2:      #F0F0F0;
+  --surface-3:      #E5E5E5;
   --border:         rgba(0,0,0,0.08);
-  --border-focus:   rgba(99,102,241,0.5);
+  --border-focus:   rgba(139, 30, 30,0.5);
 
-  --text-primary:   #0f172a;
-  --text-secondary: #475569;
-  --text-muted:     #94a3b8;
-  --text-inverse:   #f1f5f9;
+  --text-primary:   #1A1A1A;
+  --text-secondary: #525252;
+  --text-muted:     #9CA3AF;
+  --text-inverse:   #F5F5F5;
 
-  --glass-bg:     rgba(255,255,255,0.75);
+  --glass-bg:     rgba(255,255,255,0.85);
   --glass-border: rgba(0,0,0,0.06);
 
-  --shadow-sm:  0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md:  0 8px 24px rgba(0,0,0,0.1);
-  --shadow-lg:  0 20px 40px rgba(0,0,0,0.12);
-  --shadow-xl:  0 32px 64px rgba(0,0,0,0.15);
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:  0 8px 24px rgba(0,0,0,0.08);
+  --shadow-lg:  0 20px 40px rgba(0,0,0,0.1);
+  --shadow-xl:  0 32px 64px rgba(0,0,0,0.12);
 }
 
 /* ── Reset ────────────────────────────────────────────── */
@@ -219,14 +217,14 @@ h1, h2, h3, h4, h5, h6 {
 .capitalize { text-transform: capitalize; }
 
 .text-gradient {
-  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #38bdf8 100%);
+  background: linear-gradient(135deg, #8B1E1E 0%, #F44336 50%, #A52A2A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-brand {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #8B1E1E 0%, #731616 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -410,9 +408,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
-  border-color: rgba(99, 102, 241, 0.25);
+  border-color: rgba(139, 30, 30, 0.2);
 }
 
 .card-hover:active {
@@ -468,14 +466,16 @@ h1, h2, h3, h4, h5, h6 {
 .btn:active { transform: scale(0.97) translateY(1px); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  background: var(--primary);
   color: white;
-  box-shadow: var(--shadow-brand-sm);
+  border: 1px solid rgba(0,0,0,0.8);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 1px 2px rgba(0,0,0,0.4);
 }
 
 .btn-primary:hover {
-  box-shadow: var(--shadow-brand);
-  transform: translateY(-2px);
+  background: var(--primary-hover);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.5);
+  transform: translateY(-1px);
 }
 
 .btn-primary:active { transform: translateY(0) scale(0.98); }
@@ -616,7 +616,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-control:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  box-shadow: 0 0 0 3px rgba(139, 30, 30,0.12);
   background: var(--surface-1);
 }
 
@@ -705,7 +705,7 @@ select.form-control option {
 .badge-completed { background: rgba(16,185,129,0.1);  color: var(--status-completed); border-color: rgba(16,185,129,0.25); }
 .badge-cancelled { background: rgba(239,68,68,0.1);   color: var(--status-cancelled); border-color: rgba(239,68,68,0.25); }
 .badge-tow       { background: rgba(139,92,246,0.1);  color: var(--status-tow);       border-color: rgba(139,92,246,0.25); }
-.badge-brand     { background: rgba(99,102,241,0.12); color: var(--primary);          border-color: rgba(99,102,241,0.25); }
+.badge-brand     { background: rgba(139, 30, 30,0.1);   color: var(--primary);          border-color: rgba(139, 30, 30,0.25); }
 .badge-success   { background: rgba(16,185,129,0.12); color: var(--secondary);        border-color: rgba(16,185,129,0.25); }
 .badge-neutral   { background: var(--surface-2);      color: var(--text-secondary);   border-color: var(--border); }
 
@@ -744,12 +744,12 @@ select.form-control option {
 .icon-box-lg  { width: 64px;  height: 64px; }
 .icon-box-xl  { width: 80px;  height: 80px; }
 
-.icon-brand  { background: rgba(99,102,241,0.15); color: var(--primary); }
-.icon-success{ background: rgba(16,185,129,0.15); color: var(--secondary); }
-.icon-warning{ background: rgba(245,158,11,0.15); color: var(--status-pending); }
-.icon-danger { background: rgba(239,68,68,0.15);  color: var(--status-cancelled); }
-.icon-info   { background: rgba(59,130,246,0.15); color: var(--status-accepted); }
-.icon-purple { background: rgba(139,92,246,0.15); color: var(--status-tow); }
+.icon-brand  { background: rgba(139, 30, 30,0.15); color: var(--primary); }
+.icon-success{ background: rgba(255, 255, 255,0.05); color: var(--text-primary); }
+.icon-warning{ background: rgba(255, 255, 255,0.05); color: var(--text-primary); }
+.icon-danger { background: rgba(139, 30, 30,0.15); color: var(--primary); }
+.icon-info   { background: rgba(255, 255, 255,0.05); color: var(--text-primary); }
+.icon-purple { background: rgba(255, 255, 255,0.05); color: var(--text-primary); }
 
 /* ── Divider ─────────────────────────────────────────── */
 .divider {
@@ -845,8 +845,8 @@ select.form-control option {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px rgba(99,102,241,0.3); }
-  50%       { box-shadow: 0 0 24px rgba(99,102,241,0.7); }
+  0%, 100% { box-shadow: 0 0 8px rgba(139, 30, 30,0.2); }
+  50%       { box-shadow: 0 0 16px rgba(139, 30, 30,0.4); }
 }
 
 @keyframes float {
@@ -1037,7 +1037,7 @@ router-outlet + * {
 }
 
 .gradient-brand {
-  background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
 }
 
 .gradient-card {
@@ -1046,7 +1046,7 @@ router-outlet + * {
 
 /* animated gradient bg */
 .gradient-animated {
-  background: linear-gradient(-45deg, #1a1a4e, #0d1a3a, #1a0d4e, #0f2a3a);
+  background: linear-gradient(-45deg, #111111, #151515, #1A1A1A, #111111);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }

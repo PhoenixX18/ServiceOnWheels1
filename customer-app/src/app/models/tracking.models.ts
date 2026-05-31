@@ -2,7 +2,7 @@
  * Tracking data models — mirrors the backend TrackingResponse DTO.
  */
 
-export type TrackingStatus = 'PENDING' | 'ASSIGNED' | 'ON_THE_WAY' | 'ARRIVED' | 'COMPLETED';
+export type TrackingStatus = 'PENDING' | 'ASSIGNED' | 'ON_THE_WAY' | 'ARRIVED' | 'IN_SERVICE' | 'COMPLETED';
 
 export interface TrackingResponse {
   requestId: string;

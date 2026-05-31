@@ -103,7 +103,7 @@
               <div class="request-card-header">
                 <div class="request-status-row">
                   <div class="status-dot {{ getDotClass(r.status) }}"></div>
-                  <span class="badge {{ getStatusClass(r.status) }}">{{ r.status | titlecase }}</span>
+                  <span class="badge {{ getStatusClass(r.status) }}">{{ formatStatus(r.status) | titlecase }}</span>
                 </div>
                 <div class="request-date">{{ r.createdAt | date:'MMM d, y' }}</div>
               </div>
@@ -151,22 +151,52 @@
                   <div class="tl-dot"></div>
                   <div class="tl-label">Pending</div>
                 </div>
-                <div class="timeline-line" [class.done]="isStepDone(r.status, 'ACCEPTED')"></div>
-                <div class="timeline-step" [class.done]="isStepDone(r.status, 'ACCEPTED')" [class.active]="r.status === 'ACCEPTED'">
+                <div class="timeline-line" [class.done]="isStepDone(r.status, 'ASSIGNED')"></div>
+                <div class="timeline-step" [class.done]="isStepDone(r.status, 'ASSIGNED')" [class.active]="r.status === 'ASSIGNED'">
                   <div class="tl-dot"></div>
-                  <div class="tl-label">Accepted</div>
+                  <div class="tl-label">Assigned</div>
                 </div>
-                <div class="timeline-line" [class.done]="isStepDone(r.status, 'IN_PROGRESS')"></div>
-                <div class="timeline-step" [class.done]="isStepDone(r.status, 'IN_PROGRESS')" [class.active]="r.status === 'IN_PROGRESS'">
+                <div class="timeline-line" [class.done]="isStepDone(r.status, 'ON_THE_WAY')"></div>
+                <div class="timeline-step" [class.done]="isStepDone(r.status, 'ON_THE_WAY')" [class.active]="r.status === 'ON_THE_WAY'">
                   <div class="tl-dot"></div>
-                  <div class="tl-label">In Progress</div>
+                  <div class="tl-label">On Way</div>
+                </div>
+                <div class="timeline-line" [class.done]="isStepDone(r.status, 'ARRIVED')"></div>
+                <div class="timeline-step" [class.done]="isStepDone(r.status, 'ARRIVED')" [class.active]="r.status === 'ARRIVED'">
+                  <div class="tl-dot"></div>
+                  <div class="tl-label">Arrived</div>
+                </div>
+                <div class="timeline-line" [class.done]="isStepDone(r.status, 'IN_SERVICE')"></div>
+                <div class="timeline-step" [class.done]="isStepDone(r.status, 'IN_SERVICE')" [class.active]="r.status === 'IN_SERVICE'">
+                  <div class="tl-dot"></div>
+                  <div class="tl-label">Service</div>
                 </div>
                 <div class="timeline-line" [class.done]="r.status === 'COMPLETED'"></div>
                 <div class="timeline-step" [class.done]="r.status === 'COMPLETED'" [class.active]="r.status === 'COMPLETED'">
                   <div class="tl-dot"></div>
-                  <div class="tl-label">Completed</div>
+                  <div class="tl-label">Done</div>
                 </div>
               </div>
+
+              <!-- Mechanic Info -->
+              @if (r.mechanicName) {
+                <div class="mechanic-info-mini mt-4 pt-3 border-t border-border">
+                  <div class="flex items-center gap-3">
+                    <div class="mech-avatar">
+                      {{ r.mechanicName.charAt(0) }}
+                    </div>
+                    <div>
+                      <div class="text-sm font-semibold text-primary">{{ r.mechanicName }}</div>
+                      <div class="text-xs text-secondary-c flex items-center gap-1">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        {{ r.mechanicRating }} &bull; {{ r.mechanicPhone }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
 
               <!-- Card Footer -->
               <div class="request-card-footer">

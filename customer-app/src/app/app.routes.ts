@@ -8,11 +8,15 @@ import { Register } from './pages/register/register';
 import { RequestServicePage } from './pages/request-service/request-service';
 import { LandingPage } from './pages/landing/landing';
 import { ProfilePage } from './pages/profile/profile';
+import { ForgotPasswordPage } from './pages/forgot-password/forgot-password';
+import { ResetPasswordPage } from './pages/reset-password/reset-password';
 
 export const routes: Routes = [
   { path: '', component: LandingPage, pathMatch: 'full', canActivate: [guestGuard] },
   { path: 'login', component: Login, canActivate: [guestGuard] },
   { path: 'register', component: Register, canActivate: [guestGuard] },
+  { path: 'forgot-password', component: ForgotPasswordPage, canActivate: [guestGuard] },
+  { path: 'reset-password', component: ResetPasswordPage, canActivate: [guestGuard] },
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'request-service', component: RequestServicePage, canActivate: [authGuard] },
   { path: 'my-requests', component: MyRequests, canActivate: [authGuard] },

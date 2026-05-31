@@ -11,13 +11,13 @@
 .rs-icon-badge {
   width: 72px;
   height: 72px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.08) 100%);
-  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 16px;
+  background: rgba(139, 30, 30,0.1);
+  border: 1px solid rgba(139, 30, 30,0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--status-cancelled, #ef4444);
+  color: var(--primary, #8B1E1E);
   margin: 0 auto;
 }
 
@@ -40,10 +40,10 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  background: rgba(239,68,68,0.08);
-  border: 1px solid rgba(239,68,68,0.2);
+  background: rgba(139, 30, 30,0.08);
+  border: 1px solid rgba(139, 30, 30,0.2);
   border-radius: 10px;
-  color: var(--status-cancelled, #ef4444);
+  color: var(--status-cancelled, #8B1E1E);
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -70,7 +70,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary, #6366f1), #8b5cf6);
+  background: var(--primary, #8B1E1E);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,7 +78,7 @@
   font-size: 0.875rem;
   color: white;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+  box-shadow: 0 4px 12px rgba(139, 30, 30,0.2);
 }
 
 .form-section-title {
@@ -114,8 +114,8 @@
   width: 100%;
   padding: 0.875rem;
   background: var(--surface-2);
-  border: 1.5px dashed var(--border);
-  border-radius: 12px;
+  border: 1.5px dashed rgba(255,255,255,0.1);
+  border-radius: 10px;
   color: var(--text-secondary);
   font-size: 0.9375rem;
   font-weight: 600;
@@ -126,9 +126,9 @@
 }
 
 .location-btn:hover:not(:disabled) {
-  background: rgba(99,102,241,0.07);
-  border-color: rgba(99,102,241,0.35);
-  color: var(--primary, #6366f1);
+  background: rgba(139, 30, 30,0.06);
+  border-color: rgba(139, 30, 30,0.25);
+  color: var(--primary, #8B1E1E);
 }
 
 .location-btn:disabled {
@@ -174,18 +174,10 @@
 .map-container {
   height: 320px;
   width: 100%;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   z-index: 10;
   background: var(--surface-2);
-}
-
-/* Leaflet dark mode tile inversion */
-[data-theme="dark"] .map-container .leaflet-layer,
-[data-theme="dark"] .map-container .leaflet-control-zoom-in,
-[data-theme="dark"] .map-container .leaflet-control-zoom-out,
-[data-theme="dark"] .map-container .leaflet-control-attribution {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
 /* Fix leaflet z-index so it doesn't overlap navbar/modals */
@@ -203,7 +195,7 @@
   padding: 1.25rem;
   background: var(--surface-1);
   border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 12px;
+  border-radius: 10px;
   border-left: 4px solid var(--status-completed, #10b981);
 }
 
@@ -217,7 +209,7 @@
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  background: rgba(16, 185, 129, 0.15);
+  background: rgba(16, 185, 129, 0.1);
   color: var(--status-completed, #10b981);
   display: flex;
   align-items: center;

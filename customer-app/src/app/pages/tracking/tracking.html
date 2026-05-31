@@ -62,7 +62,7 @@
           </div>
           <div class="flex flex-col items-end gap-2">
             <span class="badge {{ getStatusClass(data.trackingStatus) }}">
-              {{ data.trackingStatus | titlecase }}
+              {{ formatStatus(data.trackingStatus) | titlecase }}
             </span>
             @if (data.eta) {
               <span class="eta-pill">{{ data.eta }}</span>
@@ -96,7 +96,7 @@
           <div id="tracking-map" class="tracking-map"></div>
 
           <!-- Floating ETA Card -->
-          @if (data.mechanicName && data.trackingStatus !== 'ARRIVED') {
+          @if (data.mechanicName && (data.trackingStatus === 'ASSIGNED' || data.trackingStatus === 'ON_THE_WAY')) {
             <div class="eta-float">
               <div class="eta-col">
                 <div class="eta-value">{{ data.eta }}</div>
@@ -141,10 +141,26 @@
             </div>
 
             <div class="v-step" [class.done]="isStepDone(data.trackingStatus, 'ARRIVED')" [class.active]="isStepActive(data.trackingStatus, 'ARRIVED')">
-              <div class="v-dot-col"><div class="v-dot"></div></div>
+              <div class="v-dot-col"><div class="v-dot"></div><div class="v-line"></div></div>
               <div class="v-text">
                 <div class="v-title">Arrived</div>
                 <div class="v-desc">The mechanic has reached your location.</div>
+              </div>
+            </div>
+
+            <div class="v-step" [class.done]="isStepDone(data.trackingStatus, 'IN_SERVICE')" [class.active]="isStepActive(data.trackingStatus, 'IN_SERVICE')">
+              <div class="v-dot-col"><div class="v-dot"></div><div class="v-line"></div></div>
+              <div class="v-text">
+                <div class="v-title">In Service</div>
+                <div class="v-desc">Your vehicle is currently being serviced.</div>
+              </div>
+            </div>
+
+            <div class="v-step" [class.done]="isStepDone(data.trackingStatus, 'COMPLETED')" [class.active]="isStepActive(data.trackingStatus, 'COMPLETED')">
+              <div class="v-dot-col"><div class="v-dot"></div></div>
+              <div class="v-text">
+                <div class="v-title">Completed</div>
+                <div class="v-desc">Service is complete. Safe travels!</div>
               </div>
             </div>
           </div>

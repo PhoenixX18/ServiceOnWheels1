@@ -10,16 +10,19 @@ import com.serviceonwheels.auth_service.model.ServiceRequest;
 import com.serviceonwheels.auth_service.repository.ServiceRequestRepository;
 import com.serviceonwheels.auth_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ServiceRequestService {
 
     private final ServiceRequestRepository serviceRequestRepository;
     private final UserRepository userRepository;
+    private final RequestLifecycleService requestLifecycleService;
 
     public ServiceRequestResponse create(CreateServiceRequest dto, String email) {
         String userId = resolveUserId(email);
@@ -35,24 +38,19 @@ public class ServiceRequestService {
                 .address(dto.getAddress().trim())
                 .status(RequestStatus.PENDING)
                 .assignedMechanicId(null)
-                .trackingStatus(null) // will be set after save (need ID)
+                .trackingStatus(null)
                 .build();
         ServiceRequest saved = serviceRequestRepository.save(entity);
+        log.info("Service request created: id={}, userId={}", saved.getId(), userId);
 
-        // Auto-assign mechanic deterministically using the generated ID
-        String id = saved.getId();
-        saved.setTrackingStatus(com.serviceonwheels.auth_service.model.TrackingStatus.ASSIGNED);
-        saved.setAssignedMechanicId(id + "-mech");
-        saved.setMechanicName(TrackingService.pickName(id));
-        saved.setMechanicPhone(TrackingService.pickPhone(id));
-        saved.setMechanicVehicle(TrackingService.pickVehicle(id));
-        saved.setMechanicRating(TrackingService.pickRating(id));
-        saved.setMechanicStartLat(TrackingService.startLat(dto.getLatitude()));
-        saved.setMechanicStartLng(TrackingService.startLng(dto.getLongitude()));
-        saved.setAssignedAt(java.time.LocalDateTime.now());
-        saved = serviceRequestRepository.save(saved);
-
-        return toResponse(saved);
+        // Auto-assign a mechanic via lifecycle service
+        try {
+            return requestLifecycleService.acceptRequest(saved.getId());
+        } catch (Exception e) {
+            log.warn("Auto-assignment failed for request [{}]: {}. Request remains PENDING.",
+                    saved.getId(), e.getMessage());
+            return toResponse(saved);
+        }
     }
 
     public List<ServiceRequestResponse> listMine(String email) {
@@ -96,6 +94,17 @@ public class ServiceRequestService {
                 .status(entity.getStatus())
                 .assignedMechanicId(entity.getAssignedMechanicId())
                 .createdAt(entity.getCreatedAt())
+                // Phase 4 fields
+                .mechanicName(entity.getMechanicName())
+                .mechanicPhone(entity.getMechanicPhone())
+                .mechanicVehicle(entity.getMechanicVehicle())
+                .mechanicRating(entity.getMechanicRating())
+                .assignedAt(entity.getAssignedAt())
+                .arrivedAt(entity.getArrivedAt())
+                .serviceStartedAt(entity.getServiceStartedAt())
+                .completedAt(entity.getCompletedAt())
+                .cancelledAt(entity.getCancelledAt())
                 .build();
     }
 }
+

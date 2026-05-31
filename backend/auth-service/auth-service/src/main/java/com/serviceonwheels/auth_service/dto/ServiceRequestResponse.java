@@ -27,4 +27,18 @@ public class ServiceRequestResponse {
     private RequestStatus status;
     private String assignedMechanicId;
     private LocalDateTime createdAt;
+
+    // ── Mechanic details (Phase 4) ───────────────────────
+    private String mechanicName;
+    private String mechanicPhone;
+    private String mechanicVehicle;
+    private Double mechanicRating;
+
+    // ── Audit timestamps (Phase 4) ───────────────────────
+    private LocalDateTime assignedAt;
+    private LocalDateTime arrivedAt;
+    private LocalDateTime serviceStartedAt;
+    private LocalDateTime completedAt;
+    private LocalDateTime cancelledAt;
 }
+

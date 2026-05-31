@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   logout(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || typeof localStorage === 'undefined') {
       return;
     }
     localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY);
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   saveToken(token: string): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || typeof localStorage === 'undefined') {
       return;
     }
     localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token);
@@ -48,14 +48,14 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || typeof localStorage === 'undefined') {
       return null;
     }
     return localStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
   }
 
   private hasToken(): boolean {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || typeof localStorage === 'undefined') {
       return false;
     }
     return !!localStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
@@ -63,5 +63,19 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.isAuthenticated();
+  }
+
+  forgotPassword(email: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiBase}/api/auth/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiBase}/api/auth/reset-password`, { token, password });
+  }
+
+  validateResetToken(token: string): Observable<{ message: string; email: string }> {
+    return this.http.get<{ message: string; email: string }>(`${this.apiBase}/api/auth/validate-reset-token`, {
+      params: { token },
+    });
   }
 }

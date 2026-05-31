@@ -49,7 +49,7 @@
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: var(--primary, #8B1E1E);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,19 +66,10 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 2px solid transparent;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #38bdf8) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  animation: avatar-spin 4s linear infinite;
+  border: 2px solid rgba(139, 30, 30, 0.3);
 }
 
-@keyframes avatar-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
+
 
 .profile-name {
   font-size: 1.1875rem;

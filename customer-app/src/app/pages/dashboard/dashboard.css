@@ -16,14 +16,16 @@
 .welcome-banner {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #1a1a4e 0%, #1e2a60 50%, #1a1a4e 100%);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 14px;
+  background: var(--surface-0, #151515);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--primary, #8B1E1E);
   padding: 2.25rem 2.5rem;
 }
 
 [data-theme="light"] .welcome-banner {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #7c3aed 100%);
+  background: var(--surface-0);
+  border-left-color: var(--primary);
 }
 
 .welcome-bg {
@@ -33,27 +35,6 @@
   overflow: hidden;
 }
 
-.welcome-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-}
-
-.welcome-orb-1 {
-  width: 300px;
-  height: 300px;
-  top: -100px;
-  right: 100px;
-  background: rgba(99, 102, 241, 0.3);
-}
-
-.welcome-orb-2 {
-  width: 200px;
-  height: 200px;
-  bottom: -80px;
-  right: 20px;
-  background: rgba(139, 92, 246, 0.25);
-}
 
 .welcome-content {
   position: relative;
@@ -67,7 +48,7 @@
 
 .welcome-time {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
@@ -75,35 +56,29 @@
 .welcome-name {
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 800;
-  color: white;
+  color: var(--text-primary);
   letter-spacing: -0.03em;
   margin-bottom: 0.5rem;
 }
 
 .welcome-sub {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   gap: 0.25rem;
   flex-wrap: wrap;
 }
 
-.text-brand { color: rgba(255, 255, 255, 0.9) !important; }
+.text-brand { color: var(--primary, #8B1E1E) !important; }
 .badge-sm { font-size: 0.6875rem; padding: 0.2rem 0.55rem; }
 
 .welcome-cta {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  color: white !important;
-  backdrop-filter: blur(10px);
   white-space: nowrap;
-  box-shadow: none !important;
 }
 
 .welcome-cta:hover {
-  background: rgba(255, 255, 255, 0.25) !important;
-  transform: translateY(-2px) !important;
+  transform: translateY(-1px) !important;
 }
 
 /* ── Stats Row ───────────────────────────────────── */
@@ -116,7 +91,7 @@
 .stat-card {
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
@@ -125,9 +100,9 @@
 }
 
 .stat-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md, 0 8px 24px rgba(0,0,0,0.3));
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .stat-card.skeleton-card {
@@ -140,7 +115,7 @@
 .stat-card-icon {
   width: 52px;
   height: 52px;
-  border-radius: 14px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,26 +166,27 @@
   padding: 1.5rem;
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   text-decoration: none;
   color: inherit;
   transition: all 0.25s ease;
 }
 
 .action-card.action-card-primary {
-  background: linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0.05) 100%);
-  border-color: rgba(99, 102, 241, 0.2);
+  background: var(--surface-1);
+  border-color: rgba(139, 30, 30, 0.15);
+  border-left: 3px solid var(--primary, #8B1E1E);
 }
 
 .action-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md, 0 8px 24px rgba(0,0,0,0.3));
 }
 
 .action-icon {
   width: 52px;
   height: 52px;
-  border-radius: 14px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -240,7 +216,7 @@
 
 .action-card:hover .action-arrow {
   transform: translateX(4px);
-  color: var(--primary, #6366f1);
+  color: var(--primary, #8B1E1E);
 }
 
 /* ── Activity List ───────────────────────────────── */
@@ -257,7 +233,7 @@
   padding: 1.125rem 1.25rem;
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -268,7 +244,7 @@
 .activity-item:hover {
   background: var(--surface-2);
   transform: translateX(4px);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .activity-dot-wrapper {
@@ -330,15 +306,16 @@
   padding: 2rem 1.5rem;
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   flex-wrap: wrap;
 }
 
 /* ── Help Card ───────────────────────────────────── */
 .help-card {
-  background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(5,150,105,0.05) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 16px;
+  background: var(--surface-1);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-left: 3px solid var(--status-completed, #10b981);
+  border-radius: 12px;
   padding: 1.75rem 2rem;
 }
 
@@ -352,8 +329,8 @@
 .help-icon {
   width: 56px;
   height: 56px;
-  border-radius: 14px;
-  background: rgba(16, 185, 129, 0.12);
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.1);
   color: var(--status-completed, #10b981);
   display: flex;
   align-items: center;

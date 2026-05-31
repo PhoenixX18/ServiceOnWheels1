@@ -64,6 +64,9 @@ export class TrackingPage implements AfterViewInit, OnDestroy {
     this.map = this.L.map('tracking-map', {
       zoomControl: false,
       attributionControl: false,
+      zoomSnap: 0.1,
+      zoomDelta: 0.5,
+      wheelPxPerZoomLevel: 120
     }).setView([20.5937, 78.9629], 5);
 
     this.L.control.zoom({ position: 'bottomright' }).addTo(this.map);
@@ -191,7 +194,7 @@ export class TrackingPage implements AfterViewInit, OnDestroy {
         if (res.routes?.length > 0) {
           if (this.routeLayer) this.map.removeLayer(this.routeLayer);
           this.routeLayer = this.L.geoJSON(res.routes[0].geometry, {
-            style: { color: '#6366f1', weight: 4, opacity: 0.7, dashArray: '8, 6' },
+            style: { color: '#8B1E1E', weight: 4, opacity: 0.7, dashArray: '8, 6' },
           }).addTo(this.map);
           this.map.fitBounds(this.routeLayer.getBounds(), { padding: [60, 60] });
         }
@@ -200,7 +203,7 @@ export class TrackingPage implements AfterViewInit, OnDestroy {
         // Fallback: straight line
         this.routeLayer = this.L
           .polyline([[mLat, mLng], [uLat, uLng]], {
-            color: '#6366f1', weight: 4, opacity: 0.6, dashArray: '8, 6',
+            color: '#8B1E1E', weight: 4, opacity: 0.6, dashArray: '8, 6',
           })
           .addTo(this.map);
       },
@@ -213,15 +216,20 @@ export class TrackingPage implements AfterViewInit, OnDestroy {
     switch (status) {
       case 'PENDING': return 'badge-pending';
       case 'ASSIGNED': return 'badge-accepted';
-      case 'ON_THE_WAY': return 'badge-progress';
-      case 'ARRIVED': return 'badge-completed';
+      case 'ON_THE_WAY': 
+      case 'ARRIVED':
+      case 'IN_SERVICE': return 'badge-progress';
       case 'COMPLETED': return 'badge-completed';
       default: return 'badge-neutral';
     }
   }
 
+  formatStatus(status: string): string {
+    return status.replace(/_/g, ' ');
+  }
+
   isStepDone(currentStatus: TrackingStatus, step: TrackingStatus): boolean {
-    const order: TrackingStatus[] = ['PENDING', 'ASSIGNED', 'ON_THE_WAY', 'ARRIVED', 'COMPLETED'];
+    const order: TrackingStatus[] = ['PENDING', 'ASSIGNED', 'ON_THE_WAY', 'ARRIVED', 'IN_SERVICE', 'COMPLETED'];
     return order.indexOf(currentStatus) >= order.indexOf(step);
   }
 

@@ -47,8 +47,6 @@
             </svg>
             Profile
           </a>
-        } @else {
-          <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
         }
       </nav>
 
@@ -81,7 +79,10 @@
             Sign Out
           </button>
         } @else {
-          <a routerLink="/register" class="btn btn-primary btn-sm">
+          <a routerLink="/login" class="btn btn-ghost btn-sm login-btn">
+            Login
+          </a>
+          <a routerLink="/register" class="btn btn-primary btn-sm register-btn">
             Get Started
           </a>
         }

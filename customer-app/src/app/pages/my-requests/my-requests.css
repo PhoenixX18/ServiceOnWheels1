@@ -244,9 +244,9 @@
 }
 
 .timeline-step.active .tl-dot {
-  background: var(--primary, #6366f1);
-  border-color: var(--primary, #6366f1);
-  box-shadow: 0 0 10px rgba(99,102,241,0.5);
+  background: var(--primary, #8B1E1E);
+  border-color: var(--primary, #8B1E1E);
+  box-shadow: 0 0 8px rgba(139, 30, 30,0.3);
   animation: pulse-dot 1.5s infinite;
 }
 
@@ -260,7 +260,7 @@
 }
 
 .timeline-step.done .tl-label { color: var(--status-completed, #10b981); }
-.timeline-step.active .tl-label { color: var(--primary, #6366f1); }
+.timeline-step.active .tl-label { color: var(--primary, #8B1E1E); }
 
 .timeline-line {
   flex: 1;

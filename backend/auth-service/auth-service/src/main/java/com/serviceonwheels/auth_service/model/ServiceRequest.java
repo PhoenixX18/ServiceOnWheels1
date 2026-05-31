@@ -64,6 +64,15 @@ public class ServiceRequest {
     /** Timestamp when mechanic was assigned. Used to compute simulated travel progress. */
     private LocalDateTime assignedAt;
 
+    // ── Phase 4 audit timestamps ─────────────────────────
+    private LocalDateTime arrivedAt;
+
+    private LocalDateTime serviceStartedAt;
+
+    private LocalDateTime completedAt;
+
+    private LocalDateTime cancelledAt;
+
     @CreatedDate
     private LocalDateTime createdAt;
 }

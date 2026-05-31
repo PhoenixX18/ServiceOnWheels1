@@ -2,19 +2,16 @@
 
   <!-- ═══ HERO SECTION ════════════════════════════════ -->
   <section class="hero-section">
-    <!-- Background mesh -->
+    <!-- Clean, matte background without orbs/grids -->
     <div class="hero-bg">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-      <div class="hero-orb hero-orb-3"></div>
-      <div class="hero-grid"></div>
+      <div class="texture-overlay"></div>
     </div>
 
     <div class="container hero-inner">
       <div class="hero-content animate-fade-in">
         <div class="hero-pill mb-6">
           <span class="status-dot dot-completed"></span>
-          AI-Powered Roadside Assistance
+          Premium Roadside Assistance
         </div>
 
         <h1 class="hero-title">
@@ -25,20 +22,17 @@
 
         <p class="hero-subtitle mt-6 mb-10">
           Service on Wheels connects you to verified mechanics and tow trucks in real-time.
-          One tap, instant dispatch, live tracking — 24 hours a day.
+          Professional dispatch. Transparent tracking. 24 hours a day.
         </p>
 
         <div class="hero-cta">
-          <a routerLink="/register" class="btn btn-primary btn-xl hero-cta-primary">
+          <a routerLink="/register" class="btn btn-primary btn-xl">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
-            Get Started Free
+            Request Assistance
           </a>
           <a routerLink="/login" class="btn btn-secondary btn-xl">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-            </svg>
             Sign In
           </a>
         </div>
@@ -46,67 +40,55 @@
         <!-- Trust badges -->
         <div class="hero-trust mt-10">
           <div class="trust-item">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--status-completed)" stroke-width="2.5">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--text-muted)" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            No subscription required
+            No subscription
           </div>
           <div class="trust-sep"></div>
           <div class="trust-item">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--status-completed)" stroke-width="2.5">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--text-muted)" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            Available 24/7
+            24/7 Dispatch
           </div>
           <div class="trust-sep"></div>
           <div class="trust-item">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--status-completed)" stroke-width="2.5">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--text-muted)" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
-            Verified mechanics
+            Verified professionals
           </div>
         </div>
       </div>
 
-      <!-- Hero Illustration -->
+      <!-- Sophisticated Visual Element: Mechanic Dispatch Card -->
       <div class="hero-visual animate-fade-in delay-200">
-        <div class="hero-card-stack">
-          <div class="dash-card dash-card-back">
-            <div class="dash-card-pulse"></div>
-            <div class="skeleton" style="height: 12px; width: 60%; margin-bottom: 8px;"></div>
-            <div class="skeleton" style="height: 8px; width: 40%;"></div>
+        <div class="preview-card">
+          <div class="preview-header">
+            <div class="preview-badge">DISPATCH CONFIRMED</div>
+            <div class="preview-time">ETA: 8 Min</div>
           </div>
-          <div class="dash-card dash-card-mid">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="status-dot dot-progress" style="width:10px;height:10px;"></div>
-              <span style="font-size:0.8rem;color:var(--text-secondary);">Mechanic En Route</span>
+          
+          <div class="preview-map-placeholder">
+            <div class="map-route-line"></div>
+            <div class="map-marker-user"></div>
+            <div class="map-marker-mech">
+              <div class="mech-indicator"></div>
             </div>
-            <div class="dash-progress-bar">
-              <div class="dash-progress-fill"></div>
-            </div>
-            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;">ETA: ~8 minutes</div>
           </div>
-          <div class="dash-card dash-card-front">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <div class="badge badge-progress mb-2">IN PROGRESS</div>
-                <h4 style="font-size:1rem;font-weight:700;">Battery Replacement</h4>
-                <p style="font-size:0.8rem;color:var(--text-secondary);">Honda City · MH 04 AB 1234</p>
-              </div>
-              <div class="icon-box icon-box-md icon-brand" style="border-radius:12px;">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-              </div>
+          
+          <div class="preview-details">
+            <div class="preview-issue">
+              <h4 class="issue-title">Battery Jump Start</h4>
+              <p class="issue-vehicle">Tesla Model 3 • MH 01 AB 1234</p>
             </div>
-            <div class="mechanic-row">
-              <div class="mechanic-avatar">R</div>
-              <div>
-                <div style="font-size:0.875rem;font-weight:600;">Ravi Kumar</div>
-                <div style="font-size:0.75rem;color:var(--status-completed);">⭐ 4.9 · Verified</div>
-              </div>
-              <div class="ml-auto">
-                <span class="badge badge-success">ON WAY</span>
+            
+            <div class="preview-mechanic">
+              <div class="mech-avatar">R</div>
+              <div class="mech-info">
+                <div class="mech-name">Ravi Kumar</div>
+                <div class="mech-rating">⭐ 4.9 • Certified</div>
               </div>
             </div>
           </div>
@@ -342,9 +324,7 @@
   <!-- ═══ CTA SECTION ═════════════════════════════════ -->
   <section class="cta-section animate-fade-in">
     <div class="container">
-      <div class="cta-card">
-        <div class="cta-orb cta-orb-1"></div>
-        <div class="cta-orb cta-orb-2"></div>
+      <div class="cta-card animate-fade-in">
         <div class="cta-content">
           <h2 class="cta-title">Ready to drive with confidence?</h2>
           <p class="cta-subtitle">Join thousands of drivers who trust Service on Wheels for peace of mind on every journey.</p>

@@ -78,10 +78,15 @@ export class RequestServicePage implements AfterViewInit, OnDestroy {
 
   private initMap() {
     // Default map view centered to a reasonable default (e.g. India)
-    this.map = this.L.map('map').setView([20.5937, 78.9629], 5);
+    this.map = this.L.map('map', {
+      zoomSnap: 0.1,
+      zoomDelta: 0.5,
+      wheelPxPerZoomLevel: 120
+    }).setView([20.5937, 78.9629], 5);
     
-    this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    this.L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
     }).addTo(this.map);
 
     // Ensure Leaflet recalculates map size properly

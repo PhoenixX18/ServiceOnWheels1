@@ -1,11 +1,16 @@
 <div class="auth-layout animate-fade-in">
 
-  <!-- Left Panel: Form -->
+  <!-- Background Visuals -->
+  <div class="auth-visual-bg">
+    <div class="auth-visual-texture"></div>
+  </div>
+
+  <!-- Centered Form -->
   <div class="auth-form-panel">
     <div class="auth-form-container">
 
       <!-- Logo -->
-      <a routerLink="/" class="auth-brand mb-10">
+      <a routerLink="/" class="auth-brand mb-8">
         <div class="auth-brand-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
@@ -91,6 +96,10 @@
           @if (form.controls.password.touched && form.controls.password.invalid) {
             <div class="form-error">At least 8 characters required</div>
           }
+
+          <div class="forgot-password-row">
+            <a routerLink="/forgot-password" class="forgot-password-link">Forgot Password?</a>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-primary w-full auth-submit-btn" [disabled]="submitting()" id="login-submit-btn">
@@ -112,48 +121,6 @@
         Create Account
       </a>
 
-    </div>
-  </div>
-
-  <!-- Right Panel: Visual -->
-  <div class="auth-visual-panel">
-    <div class="auth-visual-bg">
-      <div class="auth-visual-orb auth-orb-1"></div>
-      <div class="auth-visual-orb auth-orb-2"></div>
-      <div class="auth-visual-grid"></div>
-    </div>
-    <div class="auth-visual-content">
-      <div class="auth-visual-card animate-float">
-        <div class="avc-badge">
-          <span class="status-dot dot-completed"></span>
-          MECHANIC ASSIGNED
-        </div>
-        <h3 class="avc-title">Ravi Kumar is on the way</h3>
-        <p class="avc-desc">ETA: 8 minutes · Honda City · Battery Issue</p>
-        <div class="avc-progress">
-          <div class="avc-progress-fill"></div>
-        </div>
-      </div>
-
-      <div class="auth-visual-tagline">
-        <h2 class="avt-title">Fast. Reliable.<br>AI-Powered.</h2>
-        <p class="avt-desc">Roadside assistance exactly when you need it — anywhere, anytime.</p>
-      </div>
-
-      <div class="auth-visual-stats">
-        <div class="avs-item">
-          <div class="avs-value">10k+</div>
-          <div class="avs-label">Assists</div>
-        </div>
-        <div class="avs-item">
-          <div class="avs-value">15m</div>
-          <div class="avs-label">Avg Response</div>
-        </div>
-        <div class="avs-item">
-          <div class="avs-value">4.9★</div>
-          <div class="avs-label">Rating</div>
-        </div>
-      </div>
     </div>
   </div>
 
