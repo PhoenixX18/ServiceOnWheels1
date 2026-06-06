@@ -252,6 +252,6 @@ This project was built to strengthen practical knowledge in:
 
 # 👨‍💻 Author
 
-Mukesh Nathan
+T Mukesh 
 
 GitHub: PhoenixX18

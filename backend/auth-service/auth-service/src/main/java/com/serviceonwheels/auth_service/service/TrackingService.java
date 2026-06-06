@@ -49,7 +49,7 @@ public class TrackingService {
     /** Offset in degrees (~2.5 km) used to place the mechanic's start position. */
     private static final double START_OFFSET_DEG = 0.022;
 
-    // ── Public API ───────────────────────────────────────
+    // ── Public API ───
 
     /**
      * Build a {@link TrackingResponse} for the given request.
