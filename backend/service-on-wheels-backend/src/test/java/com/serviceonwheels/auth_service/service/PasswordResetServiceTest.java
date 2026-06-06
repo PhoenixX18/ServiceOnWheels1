@@ -2,6 +2,7 @@ package com.serviceonwheels.auth_service.service;
 
 import com.serviceonwheels.auth_service.dto.ForgotPasswordRequest;
 import com.serviceonwheels.auth_service.dto.ResetPasswordRequest;
+import com.serviceonwheels.auth_service.exception.InvalidResetTokenException;
 import com.serviceonwheels.auth_service.model.PasswordResetToken;
 import com.serviceonwheels.auth_service.model.User;
 import com.serviceonwheels.auth_service.repository.PasswordResetTokenRepository;
@@ -92,7 +93,7 @@ class PasswordResetServiceTest {
             verify(tokenRepository).save(cap.capture());
 
             PasswordResetToken saved = cap.getValue();
-            assertNotNull(saved.getToken());
+            assertNotNull(saved.getTokenHash());
             assertFalse(saved.isUsed());
             // Expiry should be ~30 minutes from now
             assertTrue(saved.getExpiresAt().isAfter(LocalDateTime.now().plusMinutes(29)));
@@ -110,7 +111,7 @@ class PasswordResetServiceTest {
         @DisplayName("successfully resets password with valid token")
         void resetsPassword_whenTokenValid() {
             PasswordResetToken token = PasswordResetToken.builder()
-                    .token("valid-token")
+                    .tokenHash("hashed-valid-token")
                     .email("test@example.com")
                     .used(false)
                     .expiresAt(LocalDateTime.now().plusMinutes(15))
@@ -118,7 +119,7 @@ class PasswordResetServiceTest {
 
             User user = User.builder().id("u1").email("test@example.com").password("old-hash").build();
 
-            when(tokenRepository.findByToken("valid-token")).thenReturn(Optional.of(token));
+            when(tokenRepository.findByTokenHash(anyString())).thenReturn(Optional.of(token));
             when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
             when(passwordEncoder.encode("NewPassword1!")).thenReturn("new-hash");
 
@@ -138,20 +139,20 @@ class PasswordResetServiceTest {
         @DisplayName("rejects expired token")
         void rejectsExpiredToken() {
             PasswordResetToken token = PasswordResetToken.builder()
-                    .token("expired-token")
+                    .tokenHash("hashed-expired-token")
                     .email("test@example.com")
                     .used(false)
                     .expiresAt(LocalDateTime.now().minusMinutes(5))
                     .build();
 
-            when(tokenRepository.findByToken("expired-token")).thenReturn(Optional.of(token));
+            when(tokenRepository.findByTokenHash(anyString())).thenReturn(Optional.of(token));
 
             ResetPasswordRequest req = new ResetPasswordRequest();
             req.setToken("expired-token");
             req.setPassword("NewPassword1!");
 
-            IllegalArgumentException ex = assertThrows(
-                    IllegalArgumentException.class,
+            InvalidResetTokenException ex = assertThrows(
+                    InvalidResetTokenException.class,
                     () -> passwordResetService.handleResetPassword(req));
 
             assertTrue(ex.getMessage().contains("expired"));
@@ -161,20 +162,20 @@ class PasswordResetServiceTest {
         @DisplayName("rejects already-used token")
         void rejectsUsedToken() {
             PasswordResetToken token = PasswordResetToken.builder()
-                    .token("used-token")
+                    .tokenHash("hashed-used-token")
                     .email("test@example.com")
                     .used(true)
                     .expiresAt(LocalDateTime.now().plusMinutes(15))
                     .build();
 
-            when(tokenRepository.findByToken("used-token")).thenReturn(Optional.of(token));
+            when(tokenRepository.findByTokenHash(anyString())).thenReturn(Optional.of(token));
 
             ResetPasswordRequest req = new ResetPasswordRequest();
             req.setToken("used-token");
             req.setPassword("NewPassword1!");
 
-            IllegalArgumentException ex = assertThrows(
-                    IllegalArgumentException.class,
+            InvalidResetTokenException ex = assertThrows(
+                    InvalidResetTokenException.class,
                     () -> passwordResetService.handleResetPassword(req));
 
             assertTrue(ex.getMessage().contains("already been used"));
@@ -183,13 +184,13 @@ class PasswordResetServiceTest {
         @Test
         @DisplayName("rejects invalid token")
         void rejectsInvalidToken() {
-            when(tokenRepository.findByToken("bad-token")).thenReturn(Optional.empty());
+            when(tokenRepository.findByTokenHash(anyString())).thenReturn(Optional.empty());
 
             ResetPasswordRequest req = new ResetPasswordRequest();
             req.setToken("bad-token");
             req.setPassword("NewPassword1!");
 
-            assertThrows(IllegalArgumentException.class,
+            assertThrows(InvalidResetTokenException.class,
                     () -> passwordResetService.handleResetPassword(req));
         }
     }

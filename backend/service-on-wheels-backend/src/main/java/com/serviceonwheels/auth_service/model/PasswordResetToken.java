@@ -23,8 +23,12 @@ public class PasswordResetToken {
     @Indexed
     private String email;
 
+    /**
+     * SHA-256 hash of the raw token. The raw token is never persisted;
+     * lookups compare the hash of the incoming token against this field.
+     */
     @Indexed(unique = true)
-    private String token;
+    private String tokenHash;
 
     private LocalDateTime createdAt;
 

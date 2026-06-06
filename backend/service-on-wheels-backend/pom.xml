@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.serviceonwheels</groupId>
-	<artifactId>auth-service</artifactId>
+	<artifactId>service-on-wheels-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>auth-service</name>
-	<description>Service On Wheels - Auth Service</description>
+	<name>Service On Wheels Backend</name>
+	<description>Full-stack roadside assistance backend built with Spring Boot, MongoDB, JWT authentication, request management, mechanic tracking, and password reset functionality.</description>
 
 	<properties>
 		<java.version>21</java.version>

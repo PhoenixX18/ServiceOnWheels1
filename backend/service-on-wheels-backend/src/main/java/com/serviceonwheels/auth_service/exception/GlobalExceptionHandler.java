@@ -242,6 +242,42 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 
+    @ExceptionHandler(EmailDeliveryException.class)
+    public ResponseEntity<ErrorResponse> handleEmailDelivery(
+            EmailDeliveryException ex,
+            HttpServletRequest request) {
+
+        log.error("Email delivery failed at [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                "Email Delivery Failed",
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                null);
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(body);
+    }
+
+    @ExceptionHandler(InvalidResetTokenException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidResetToken(
+            InvalidResetTokenException ex,
+            HttpServletRequest request) {
+
+        log.warn("Invalid reset token at [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request",
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                null);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
     @ExceptionHandler(org.springframework.mail.MailException.class)
     public ResponseEntity<ErrorResponse> handleMailException(
             org.springframework.mail.MailException ex,

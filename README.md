@@ -2,148 +2,149 @@
 
 A full-stack roadside assistance platform built using **Angular, Spring Boot, MongoDB, and JWT Authentication**.
 
-Service on Wheels allows users to request roadside assistance, share their location, manage service requests, and track assistance workflows through a modern web interface.
+Service on Wheels enables users to request roadside assistance, share their location, manage service requests, and track the progress of their requests through a secure and modern web application.
 
 ---
 
-# 📌 Project Overview
+## 📌 Overview
 
-Vehicle breakdowns and roadside emergencies often require fast assistance and clear communication.
+Service on Wheels is designed to help users quickly request roadside assistance during vehicle breakdowns or emergencies.
 
-Service on Wheels is designed to simplify this process by providing a centralized platform where users can:
+The platform provides:
 
-* Register and securely log in
-* Create roadside assistance requests
-* Share location using interactive maps
-* Track request status
-* View request history
-* Manage profile and account details
-* Reset passwords securely
+* Secure user authentication
+* Roadside assistance request management
+* Interactive map-based location selection
+* Request tracking and status monitoring
+* User profile management
+* Password recovery functionality
 
-The project follows a **full-stack architecture** with Angular frontend, Spring Boot backend, and MongoDB database.
+The application follows a modern full-stack architecture with Angular on the frontend, Spring Boot on the backend, and MongoDB as the database.
 
 ---
 
-# ✨ Current Features
+## ✨ Features
 
-## Authentication & Security
+### Authentication & Security
 
 * User Registration
 * Secure Login
 * JWT Authentication
-* Protected Routes
+* Route Protection
 * BCrypt Password Encryption
-* Forgot Password Flow (SMTP-based reset)
+* Forgot Password Workflow
 
-## User Dashboard
+### Dashboard
 
-* Personalized Dashboard
-* Request Overview
+* Personalized User Dashboard
 * Request Statistics
-* Quick Navigation
+* Quick Access Navigation
+* Account Overview
 
-## Roadside Assistance Requests
+### Roadside Assistance Requests
 
 Users can:
 
-* Submit vehicle details
 * Select vehicle type
-* Describe roadside issues
+* Enter vehicle details
+* Choose roadside issues
+* Add additional notes
 * Share GPS location
-* Use map-based location selection
-* Create assistance requests
+* Select location using an interactive map
+* Submit service requests
 
-## Location Integration
+### Location Services
 
-* OpenStreetMap
+* OpenStreetMap Integration
 * Leaflet Maps
 * GPS Location Detection
-* Map-based Coordinate Selection
-* Reverse Geocoding Support
+* Reverse Geocoding
+* Coordinate-Based Request Submission
 
-## Request Management
+### Request Management
 
-* View Request History
+* View Service Request History
 * Track Request Status
-* Dashboard Integration
-* Request Lifecycle Visibility
+* Manage Active Requests
+* Request Lifecycle Monitoring
+
+### User Profile
+
+* View Account Information
+* Account Status Display
+* Profile Dashboard
 
 ---
 
-# 🛠 Tech Stack
+## Tech Stack
 
-## Frontend
+### Frontend
 
 * Angular
 * TypeScript
-* HTML
-* CSS
-* Leaflet
+* HTML5
+* CSS3
+* Leaflet Maps
 
-## Backend
+### Backend
 
-* Java
+* Java 21
 * Spring Boot
 * Spring Security
 * JWT Authentication
 * REST APIs
 * Maven
 
-## Database
+### Database
 
 * MongoDB
 
-## Version Control & Tools
+### Tools
 
 * Git
 * GitHub
 * VS Code
+* MongoDB Compass
 
 ---
 
-# 🏗 System Architecture
-
-The application follows a decoupled frontend-backend architecture.
+## System Architecture
 
 ```text
 Angular Frontend
-        ↓
-REST API + JWT Authentication
-        ↓
+        │
+        ▼
+REST APIs + JWT Authentication
+        │
+        ▼
 Spring Boot Backend
-        ↓
+        │
+        ▼
 MongoDB Database
 ```
 
-This architecture improves maintainability, scalability, and separation of concerns.
+This architecture ensures separation of concerns, maintainability, and scalability.
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
 
-Add project screenshots here.
-
-Recommended:
+Add screenshots of:
 
 * Landing Page
 * Login Page
+* Registration Page
 * Dashboard
-* Request Form
-* Location Map
+* Request Assistance Page
+* Map Location Selection
 * Request History
 * Profile Page
 
-Example:
-
-```markdown
-![Dashboard](screenshots/dashboard.png)
-```
-
 ---
 
-# ⚙ Installation & Setup
+## Installation
 
-## Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/PhoenixX18/ServiceOnWheels1.git
@@ -151,21 +152,14 @@ git clone https://github.com/PhoenixX18/ServiceOnWheels1.git
 
 ---
 
-## Backend Setup
-
-Navigate:
+### Backend Setup
 
 ```bash
 cd backend/auth-service/auth-service
-```
-
-Run backend:
-
-```bash
 mvn spring-boot:run
 ```
 
-Backend runs on:
+Backend URL:
 
 ```text
 http://localhost:8081
@@ -173,27 +167,15 @@ http://localhost:8081
 
 ---
 
-## Frontend Setup
-
-Navigate:
+### Frontend Setup
 
 ```bash
 cd customer-app
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Run Angular:
-
-```bash
 ng serve
 ```
 
-Frontend runs on:
+Frontend URL:
 
 ```text
 http://localhost:4200
@@ -201,15 +183,9 @@ http://localhost:4200
 
 ---
 
-# 🔐 Configuration
+## Configuration
 
-Configure:
-
-* MongoDB URI
-* JWT Secret
-* SMTP Credentials (Forgot Password)
-
-Example:
+Configure the following values before running:
 
 ```properties
 spring.data.mongodb.uri=
@@ -218,40 +194,48 @@ spring.mail.username=
 spring.mail.password=
 ```
 
-Do not commit credentials or `.env` files.
+Never commit:
+
+* .env files
+* Application secrets
+* JWT secrets
+* SMTP credentials
 
 ---
 
-# 🚀 Development Roadmap
+## 🚀 Roadmap
 
-Planned improvements:
+Planned Enhancements:
 
-* Live mechanic tracking
-* Mechanic workflow system
-* Role-based access
-* Enhanced request lifecycle
-* Testing
-* Docker deployment
-* CI/CD pipeline
-
----
-
-# 🎯 Learning & Engineering Goals
-
-This project was built to strengthen practical knowledge in:
-
-* Full-stack development
-* REST API design
-* Authentication & authorization
-* Frontend-backend integration
-* MongoDB persistence
-* Secure application architecture
-* Real-world service platform workflows
+* Mechanic Tracking System
+* Mechanic Portal
+* Role-Based Access Control
+* Real-Time Status Updates
+* Refresh Token Authentication
+* Unit & Integration Testing
+* Docker Containerization
+* CI/CD Pipeline
+* Cloud Deployment
 
 ---
 
-# 👨‍💻 Author
+## 🎯 Learning Objectives
 
-T Mukesh 
+This project was developed to strengthen practical experience in:
 
-GitHub: PhoenixX18
+* Full-Stack Development
+* REST API Design
+* Authentication & Authorization
+* Angular Development
+* Spring Boot Development
+* MongoDB Integration
+* Secure Application Design
+* Location-Based Services
+
+---
+
+
+## Project by
+**T Mukesh**
+
+GitHub: https://github.com/PhoenixX18
